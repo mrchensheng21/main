@@ -75,6 +75,22 @@ public class ScheduleTest {
     }
 
     @Test
+    public void getInterviewsSlot_existingInterviewee_success() {
+        Schedule schedule = SampleSchedules.getSampleFilledSchedule();
+
+        List<Slot> johnSlots = new LinkedList<>();
+        johnSlots.add(new Slot("18:00", "18:30"));
+        johnSlots.add(new Slot("18:30", "19:00"));
+
+        List<Slot> selinaSlots = new LinkedList<>();
+        selinaSlots.add(new Slot("19:30", "20:00"));
+        selinaSlots.add(new Slot("20:00", "20:30"));
+
+        assertEquals(johnSlots, schedule.getInterviewSlots("John"));
+        assertEquals(selinaSlots, schedule.getInterviewSlots("Selina"));
+    }
+
+    @Test
     public void getInterviewsSlots_nonExistingInterviewee_emptyList() {
         Schedule schedule = SampleSchedules.getSampleFilledSchedule();
         assertEquals(new LinkedList<>(), schedule.getInterviewSlots("ABC"));
