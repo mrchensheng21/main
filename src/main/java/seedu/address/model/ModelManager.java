@@ -93,6 +93,7 @@ public class ModelManager implements Model {
     }
 
     /** Returns the schedulesList **/
+    @Override
     public List<Schedule> getSchedulesList() {
         return schedulesList;
     }
@@ -160,7 +161,6 @@ public class ModelManager implements Model {
         }
         return listClone;
     }
-
 
     //=========== AddressBook ================================================================================
 
