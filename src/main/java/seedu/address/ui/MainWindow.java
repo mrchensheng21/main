@@ -35,6 +35,7 @@ public class MainWindow extends UiPart<Stage> {
     private PersonListPanel personListPanel;
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
+    private ScheduleView scheduleView;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -110,6 +111,8 @@ public class MainWindow extends UiPart<Stage> {
     void fillInnerParts() {
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         schedulePanelPlaceholder.getChildren().add(personListPanel.getRoot());
+
+        scheduleView = new ScheduleView()
 
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
