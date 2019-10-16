@@ -74,6 +74,21 @@ public class ScheduleTest {
         assertEquals(selinaSlots, schedule.getInterviewSlots("Selina"));
     }
 
+    public void getInterviewsSlot_existingInterviewee_success() {
+        Schedule schedule = SampleSchedules.getSampleFilledSchedule();
+
+        List<Slot> johnSlots = new LinkedList<>();
+        johnSlots.add(new Slot("18:00", "18:30"));
+        johnSlots.add(new Slot("18:30", "19:00"));
+
+        List<Slot> selinaSlots = new LinkedList<>();
+        selinaSlots.add(new Slot("19:30", "20:00"));
+        selinaSlots.add(new Slot("20:00", "20:30"));
+
+        assertEquals(johnSlots, schedule.getInterviewSlots("John"));
+        assertEquals(selinaSlots, schedule.getInterviewSlots("Selina"));
+    }
+
     @Test
     public void getInterviewsSlots_nonExistingInterviewee_emptyList() {
         Schedule schedule = SampleSchedules.getSampleFilledSchedule();
@@ -94,10 +109,6 @@ public class ScheduleTest {
         assertFalse(schedule.hasInterviewer(bernard));
     }
 
-    /**
-     * Compare the resultant Schedule object given a sample interviewer's availability table
-     * with the expected Schedule object.
-     */
     @Test
     public void addInterviewer_oneValidAvailability_true() {
         Schedule scheduleTest = SampleSchedules.getSampleAvailabilityTable();
@@ -136,6 +147,10 @@ public class ScheduleTest {
         assertEquals(expectedSchedule, scheduleTest);
     }
 
+    /**
+     * Compare the resultant Schedule object given a sample interviewer's availability table
+     * with the expected Schedule object.
+     */
     @Test
     public void addInterviewer_multipleAvailabilitiesSomeInvalid_true() {
         Schedule scheduleTest = SampleSchedules.getSampleAvailabilityTable();

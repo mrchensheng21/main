@@ -165,7 +165,7 @@ public class Schedule {
         }
         Schedule sCasted = (Schedule) s;
         return date.equals(sCasted.date)
-                && table.equals(sCasted.table);
+            && table.equals(sCasted.table);
     }
 
     /**
