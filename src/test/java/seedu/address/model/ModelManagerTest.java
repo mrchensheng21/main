@@ -19,6 +19,7 @@ import org.junit.jupiter.api.Test;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.testutil.AddressBookBuilder;
+import seedu.address.testutil.SampleSchedules;
 
 public class ModelManagerTest {
 
@@ -29,6 +30,18 @@ public class ModelManagerTest {
         assertEquals(new UserPrefs(), modelManager.getUserPrefs());
         assertEquals(new GuiSettings(), modelManager.getGuiSettings());
         assertEquals(new AddressBook(), new AddressBook(modelManager.getAddressBook()));
+    }
+
+    @Test
+    public void constructorWithEmptyParametersExceptSchedule() {
+        List<Schedule> schedules = new LinkedList<>();
+        schedules.add(SampleSchedules.getSampleFilledSchedule());
+        schedules.add(SampleSchedules.getSampleAvailabilityTable());
+
+        ModelManager modelManagerWithData = new ModelManager(new AddressBook(), new UserPrefs(), schedules);
+        List<Schedule> schedulesOfModelManager = modelManagerWithData.getSchedulesList();
+
+        assertEquals(schedules, schedulesOfModelManager);
     }
 
     @Test

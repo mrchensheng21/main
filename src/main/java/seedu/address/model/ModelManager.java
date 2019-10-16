@@ -18,7 +18,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Slot;
 
 /**
- * Represents the in-memory model of the address book data.
+ * Represents the in-memory model of the schedule table data.
  */
 public class ModelManager implements Model {
     public static final Schedule EMPTY_SCHEDULE = new Schedule("", new LinkedList<>());
@@ -27,6 +27,7 @@ public class ModelManager implements Model {
     private final AddressBook addressBook;
     private final UserPrefs userPrefs;
     private final FilteredList<Person> filteredPersons;
+    private final List<Schedule> schedulesList;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -34,13 +35,16 @@ public class ModelManager implements Model {
     public ModelManager(ReadOnlyAddressBook addressBook, ReadOnlyUserPrefs userPrefs,
                         List<Schedule> schedulesList) {
         super();
-        requireAllNonNull(addressBook, userPrefs);
+        requireAllNonNull(addressBook, userPrefs, schedulesList);
 
-        logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
+        logger.fine("Initializing with list of schedules: " + schedulesList + " and user prefs " + userPrefs);
 
+        // TODO: Delete these later
         this.addressBook = new AddressBook(addressBook);
-        this.userPrefs = new UserPrefs(userPrefs);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+
+        this.schedulesList = cloneSchedulesList(schedulesList);
+        this.userPrefs = new UserPrefs(userPrefs);
     }
 
     public ModelManager() {
@@ -234,5 +238,4 @@ public class ModelManager implements Model {
             && userPrefs.equals(other.userPrefs)
             && filteredPersons.equals(other.filteredPersons);
     }
-
 }
