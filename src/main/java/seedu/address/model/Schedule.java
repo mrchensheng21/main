@@ -84,7 +84,7 @@ public class Schedule {
      */
     public String generateColumnTitle(Interviewer interviewer) {
         return String.format("%s - %s", interviewer.getDepartment().toString(),
-                interviewer.getName().toString());
+            interviewer.getName().toString());
     }
 
     /**
