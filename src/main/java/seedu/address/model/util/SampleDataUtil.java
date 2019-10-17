@@ -10,10 +10,11 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.Schedule;
 import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
+import seedu.address.model.person.Department;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Slot;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -88,6 +89,24 @@ public class SampleDataUtil {
         return Arrays.stream(strings)
                 .map(Tag::new)
                 .collect(Collectors.toSet());
+    }
+  
+    /**
+     * Returns a department list containing the list of strings given.
+     */
+    public static List<Department> getDepartmentList(String... strings) {
+        return Arrays.stream(strings)
+                .map(Department::new)
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Returns a time slot list containing the list of strings given.
+     */
+    public static List<Slot> getTimeslotList(String...timeslots) {
+        return Arrays.stream(timeslots)
+                .map(Slot::new)
+                .collect(Collectors.toList());
     }
 }
 
