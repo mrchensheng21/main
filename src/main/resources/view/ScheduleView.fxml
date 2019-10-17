@@ -5,5 +5,6 @@
 <?import javafx.geometry.Insets?>
 
 <VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-    <TableView fx:id="tableView" VBox.vgrow="ALWAYS" />
+    <TableView fx:id="tableView" VBox.vgrow="ALWAYS">
+    </TableView>
 </VBox>
