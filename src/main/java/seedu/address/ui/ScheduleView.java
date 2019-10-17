@@ -39,7 +39,6 @@ public class ScheduleView extends UiPart<Region> {
             column.setCellValueFactory(param ->
                     new ReadOnlyObjectWrapper<>(param.getValue().get(finalIdx))
             );
-            
             this.tableView.getColumns().add(column);
             this.tableView.setColumnResizePolicy(this.tableView.CONSTRAINED_RESIZE_POLICY);
         }
