@@ -1,13 +1,13 @@
 package seedu.address.ui;
 
+import java.util.List;
+
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.Region;
-
-import java.util.List;
 
 /**
  * Table consisting of timetables of scheduling.
