@@ -16,26 +16,28 @@ public class ScheduleView extends UiPart<Region> {
 
     private static final String FXML = "ScheduleView.fxml";
 
-    private ObservableList<ObservableList<String>> schedule;
+    private List<List<String>> titles;
+    private List<ObservableList<ObservableList<String>>> scheduleList; // Excluding titles
 
     @FXML
     private TableView tableView;
 
-    ScheduleView(ObservableList<ObservableList<String>> schedule) {
+    ScheduleView(List<List<String>> titles, List<ObservableList<ObservableList<String>>> scheduleList) {
         super(FXML);
-        this.schedule = schedule;
-        initialise();
+        this.titles = titles;
+        this.scheduleList = scheduleList;
     }
 
     /**
      * Allow the creation of table.
      */
     private void initialise() {
-        for (int i = 0; i < this.schedule.get(0).size(); i++) {
+        // Currently the code here will only retrieve the first list of titles.
+        for (int i = 0; i < titles.get(0).size(); i++) {
             final int finalIdx = i;
             TableColumn<ObservableList<String>, String> column =
                     new TableColumn<ObservableList<String>, String>(
-                            this.schedule.get(0).get(i)
+                            titles.get(0).get(i)
                     );
             column.setCellValueFactory(param ->
                     new ReadOnlyObjectWrapper<>(param.getValue().get(finalIdx))
@@ -44,6 +46,11 @@ public class ScheduleView extends UiPart<Region> {
             this.tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         }
 
-        this.tableView.setItems(this.schedule);
+        // the data of the schedule now excludes the titles, so titles is not in the first row of data returned anymore
+        for (int i = 0; i < this.scheduleList.get(0).size(); i++) {
+            this.tableView.getItems().add(
+                    this.scheduleList.get(0).get(i)
+            );
+        }
     }
 }
