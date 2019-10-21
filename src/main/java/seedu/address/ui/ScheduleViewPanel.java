@@ -19,13 +19,17 @@ public class ScheduleViewPanel extends UiPart<Region>{
 
     private List<ScheduleView> scheduleViewList;
 
+    private List<List<String>> titles;
+
     @FXML
     private StackPane container;
 
-    ScheduleViewPanel(List<ObservableList<ObservableList<String>>> scheduleList) {
+    ScheduleViewPanel(
+            List<List<String>> titles,List<ObservableList<ObservableList<String>>> scheduleList) {
         super(FXML);
         this.scheduleList = scheduleList;
         this.scheduleViewList = new ArrayList<>();
+        this.titles = titles;
         fillPanel();
     }
 
@@ -34,7 +38,7 @@ public class ScheduleViewPanel extends UiPart<Region>{
      */
     private void fillPanel() {
         for (int i = 0; i < this.scheduleList.size(); i++) {
-            scheduleViewList.add(new ScheduleView(this.scheduleList.get(i)));
+            scheduleViewList.add(new ScheduleView(this.titles.get(i), this.scheduleList.get(i)));
         }
         for (ScheduleView schedule : scheduleViewList) {
             container.getChildren().add(schedule.getRoot());
