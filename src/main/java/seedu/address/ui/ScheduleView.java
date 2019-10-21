@@ -47,4 +47,3 @@ public class ScheduleView extends UiPart<Region> {
         this.tableView.setItems(this.schedule);
     }
 }
-
