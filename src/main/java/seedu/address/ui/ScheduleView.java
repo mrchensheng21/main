@@ -26,18 +26,18 @@ public class ScheduleView extends UiPart<Region> {
         super(FXML);
         this.titles = titles;
         this.schedule = schedule;
+        initialise();
     }
 
     /**
      * Allow the creation of table.
      */
     private void initialise() {
-        // Currently the code here will only retrieve the first list of titles.
         for (int i = 0; i < this.titles.size(); i++) {
             final int finalIdx = i;
             TableColumn<ObservableList<String>, String> column =
                     new TableColumn<ObservableList<String>, String>(
-                            titles.get(i)
+                            this.titles.get(i)
                     );
             column.setCellValueFactory(param ->
                     new ReadOnlyObjectWrapper<>(param.getValue().get(finalIdx))
@@ -45,8 +45,6 @@ public class ScheduleView extends UiPart<Region> {
             this.tableView.getColumns().add(column);
             this.tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         }
-
             this.tableView.setItems(this.schedule);
-
     }
 }
