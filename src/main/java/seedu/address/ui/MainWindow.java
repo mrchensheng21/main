@@ -35,7 +35,6 @@ public class MainWindow extends UiPart<Stage> {
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
     private ScheduleViewPanel scheduleViewPanel;
-
     @FXML
     private StackPane commandBoxPlaceholder;
 
