@@ -1,0 +1,46 @@
+package seedu.address.ui;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
+
+/**
+ * Panel to hold multiple schedule tables together.
+ */
+public class ScheduleViewPanel extends UiPart<Region>{
+
+    private static final String FXML = "ScheduleViewPanel.fxml";
+
+    private List<ObservableList<ObservableList<String>>> scheduleList;
+
+    private List<ScheduleView> scheduleViewList;
+
+    @FXML
+    private StackPane container;
+
+    ScheduleViewPanel(List<ObservableList<ObservableList<String>>> scheduleList) {
+        super(FXML);
+        this.scheduleList = scheduleList;
+        this.scheduleViewList = new ArrayList<>();
+        fillPanel();
+    }
+
+    /**
+     * Fill the panel with the tables that is retrieved from scheduleView class.
+     */
+    private void fillPanel() {
+        for (int i = 0; i < this.scheduleList.size(); i++) {
+            scheduleViewList.add(new ScheduleView(this.scheduleList.get(i)));
+        }
+        for (ScheduleView schedule : scheduleViewList) {
+            container.getChildren().add(schedule.getRoot());
+        }
+    }
+}
+
+
+

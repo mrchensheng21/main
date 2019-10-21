@@ -16,14 +16,14 @@ public class ScheduleView extends UiPart<Region> {
 
     private static final String FXML = "ScheduleView.fxml";
 
-    private List<ObservableList<ObservableList<String>>> scheduleList;
+    private ObservableList<ObservableList<String>> schedule;
 
     @FXML
     private TableView tableView;
 
-    ScheduleView(List<ObservableList<ObservableList<String>>> scheduleList) {
+    ScheduleView(ObservableList<ObservableList<String>> schedule) {
         super(FXML);
-        this.scheduleList = scheduleList;
+        this.schedule = schedule;
         initialise();
     }
 
@@ -31,24 +31,20 @@ public class ScheduleView extends UiPart<Region> {
      * Allow the creation of table.
      */
     private void initialise() {
-        for (int i = 0; i < this.scheduleList.get(0).get(0).size(); i++) {
+        for (int i = 0; i < this.schedule.get(0).size(); i++) {
             final int finalIdx = i;
             TableColumn<ObservableList<String>, String> column =
                     new TableColumn<ObservableList<String>, String>(
-                            this.scheduleList.get(0).get(0).get(i)
+                            this.schedule.get(0).get(i)
                     );
             column.setCellValueFactory(param ->
                     new ReadOnlyObjectWrapper<>(param.getValue().get(finalIdx))
             );
             this.tableView.getColumns().add(column);
-            this.tableView.setColumnResizePolicy(this.tableView.CONSTRAINED_RESIZE_POLICY);
+            this.tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         }
 
-        for (int i = 1; i < this.scheduleList.get(0).size(); i++) {
-            this.tableView.getItems().add(
-                    this.scheduleList.get(0).get(i)
-            );
-        }
+        this.tableView.setItems(this.schedule);
     }
 }
 
