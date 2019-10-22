@@ -32,7 +32,6 @@ public class ScheduleViewPanel extends UiPart<Region>{
         this.titles = titles;
         fillPanel();
     }
-
     /**
      * Fill the panel with the tables that is retrieved from scheduleView class.
      */
@@ -43,6 +42,21 @@ public class ScheduleViewPanel extends UiPart<Region>{
         for (ScheduleView schedule : scheduleViewList) {
             container.getChildren().add(schedule.getRoot());
         }
+    }
+
+    protected void fillPanel(
+            List<List<String>> titles,
+            List<ObservableList<ObservableList<String>>> scheduleList) {
+        for (int i = 0; i < scheduleList.size(); i++) {
+            scheduleViewList.add(new ScheduleView(titles.get(i), scheduleList.get(i)));
+        }
+        for (ScheduleView schedule : scheduleViewList) {
+            container.getChildren().add(schedule.getRoot());
+        }
+    }
+
+    protected void refresh() {
+        this.scheduleViewList.removeAll(this.scheduleViewList);
     }
 }
 

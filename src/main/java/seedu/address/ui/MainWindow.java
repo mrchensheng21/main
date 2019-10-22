@@ -166,6 +166,10 @@ public class MainWindow extends UiPart<Stage> {
         return personListPanel;
     }
 
+    public ScheduleViewPanel getScheduleViewPanel() {
+        return scheduleViewPanel;
+    }
+
     /**
      * Executes the command and returns the result.
      *
