@@ -45,6 +45,6 @@ public class ScheduleView extends UiPart<Region> {
             this.tableView.getColumns().add(column);
             this.tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         }
-            this.tableView.setItems(this.schedule);
+        this.tableView.setItems(this.schedule);
     }
 }
