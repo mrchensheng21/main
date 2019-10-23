@@ -235,6 +235,19 @@ image::CommitActivityDiagram.png[]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things.
 // end::undoredo[]
 
+=== Display Schedule Feature
+==== Proposed Implementation
+
+The display schedule feature extends Scheduler to display multiple tables of schedule per day. It is a component in the "MainWindow" class
+stored in a "ScheduleViewPanel" class. Within the "ScheduleViewPanel" class, objects of "ScheduleView" class are stored into the panel.
+
+ScheduleViewPanel implements the following function:
+*`fillPanel()` -- Fill the ScheduleView component with the schedule tables for each day.
+
+Given below is an example scenario of what will be displayed to the user.
+
+
+
 // tag::dataencryption[]
 === [Proposed] Data Encryption
 
@@ -251,7 +264,6 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 * Currently log messages are output through: `Console` and to a `.log` file.
 
 *Logging Levels*
-
 * `SEVERE` : Critical problem detected which may possibly cause the termination of the application
 * `WARNING` : Can continue, but with caution
 * `INFO` : Information showing the noteworthy actions by the App
