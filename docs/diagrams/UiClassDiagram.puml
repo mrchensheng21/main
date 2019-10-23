@@ -27,15 +27,15 @@ Class HiddenOutside #FFFFFF
 HiddenOutside ..> Ui
 HiddenOutside ..> RefreshListener
 
-RefreshListenerManager .left.|> RefreshListener
+RefreshListenerManager .right.|> RefreshListener
 UiManager .left.|> Ui
-UiManager -down-> MainWindow
+UiManager -down---> MainWindow
 MainWindow --> HelpWindow
 MainWindow *-down-> CommandBox
 MainWindow *-down-> ResultDisplay
 MainWindow *-down-> ScheduleViewPanel
 MainWindow *-down-> StatusBarFooter
-RefreshListenerManager *-down-> ScheduleViewPanel
+RefreshListenerManager *-down--> ScheduleViewPanel
 
 MainWindow -left-|> UiPart
 ResultDisplay --|> UiPart
