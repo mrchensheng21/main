@@ -246,7 +246,19 @@ ScheduleViewPanel implements the following function:
 
 Given below is an example scenario of what will be displayed to the user.
 
+Step 1. The user launches the application. The Ui will start and the MainWindow will be displayed first.
 
+Step 2. MainWindow will call all the children such as the HelpWindow, CommandBox, Result Display, StatusBarFooter and ScheduleViewPanel.
+
+Step 3. Once ScheduleViewPanel is called, it will take in a list of titles and ObservableList data from the Logic class. The list of titles
+consist of the title column for each schedule table and the ObservableList data consists of the time slots allocated to each interviewee.
+
+Step 4. ScheduleViewPanel will call the ScheduleView class to fill each table and populate each table with the data given by the Logic class.
+
+Step 5. ScheduleView will have a .fxml file of a table and it will first be filled with the column titles, followed by the time slots and the
+interviewee allocated to each time slots. The slot that has no interviewee will be displayed as "0".
+
+Step 6. Once the data is populated, the MainWindow will display the schedules of each day arranged in a table format.
 
 // tag::dataencryption[]
 === [Proposed] Data Encryption
