@@ -312,7 +312,6 @@ Additional details that can be configured by the user include:
 
 The message content can also be configured by the user. However, a default template will be used when no such configuration file exists or is provided.
 
-
 === Display Schedule Feature
 ==== Proposed Implementation
 
