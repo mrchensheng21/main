@@ -88,12 +88,45 @@ The `UI` component,
 * Executes user commands using the `Logic` component.
 * Listens for changes to `Model` data so that the UI can be updated with the modified data.
 
+==== Schedule View
+The display schedule feature extends Scheduler to display multiple tables of schedule per day. It is a component in the "MainWindow" class
+stored in a "ScheduleViewPanel" class. Within the "ScheduleViewPanel" class, objects of "ScheduleView" class are stored into the panel.
+
+ScheduleViewPanel implements the following function:
+*`fillPanel()` -- Fill the ScheduleView component with the schedule tables for each day.
+
+Given below is an example scenario of what will be displayed to the user.
+
+Step 1. The user launches the application. The Ui will start and the MainWindow will be displayed first.
+
+Step 2. MainWindow will call all the children such as the HelpWindow, CommandBox, Result Display, StatusBarFooter and ScheduleViewPanel.
+
+Step 3. Once ScheduleViewPanel is called, it will take in a list of titles and ObservableList data from the Logic class. The list of titles
+consist of the title column for each schedule table and the ObservableList data consists of the time slots allocated to each interviewee.
+
+Step 4. ScheduleViewPanel will call the ScheduleView class to fill each table and populate each table with the data given by the Logic class.
+
+Step 5. ScheduleView will have a .fxml file of a table and it will first be filled with the column titles, followed by the time slots and the
+interviewee allocated to each time slots. The slot that has no interviewee will be displayed as "0".
+
+Step 6. Once the data is populated, the MainWindow will display the schedules of each day arranged in a table format.
+
+Step 7. Once User imports a new .csv file, it will call the RefreshListener Interface. RefreshListenerManager will then take in the new titles and
+list of ObservableList of interviewee.
+
+Step 8. The RefreshListenerManager will call the MainWindow to refresh the ScheduleViewPanel.
+
+Step 9. ScheduleViewPanel will firstly clear all the data and input the updated data from the .csv file.
+
 [[Design-Logic]]
 === Logic component
 
 [[fig-LogicClassDiagram]]
 .Structure of the Logic Component
-image::LogicClassDiagram.png[]
+image::LogicClassDiagram1_2.png[]
+
+Users should be able to manually key in input (i.e add interviewers and interviewees). We therefore changed the Logic
+package accordingly to suit our needs.
 
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
@@ -122,14 +155,16 @@ image::ModelClassDiagram.png[]
 The `Model`,
 
 * stores a `UserPref` object that represents the user's preferences.
-* stores the Address Book data.
-* exposes an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* stores a list of `Schedule`. Each `Schedule` represents a schedule timetable.
+* exposes a list of `ObservableList<ObservableList<String>>` that can be 'observed' by the UI. Each of the
+  `ObservableList<ObservableList<String>>` represents the data of a `Schedule` object.
+  The `ObservableList<ObservableList<String>>` objects are bound to the UI so that the UI automatically updates  when the data of the `Schedule` objects changes.
+* exposes a list of `ObservableList<Interviewee>` that can be 'observed' by the UI.
 * does not depend on any of the other three components.
 
-[NOTE]
-As a more OOP model, we can store a `Tag` list in `Address Book`, which `Person` can reference. This would allow `Address Book` to only require one `Tag` object per unique `Tag`, instead of each `Person` needing their own `Tag` object. An example of how such a model may look like is given below. +
- +
-image:BetterModelClassDiagram.png[]
+==== Schedule
+The `Schedule` objects are filled up and created by the imported interviewer's availability. The inner data of a `Schedule` object is the same as the corresponding availability
+table in the imported interviewer's availability. The data of the `Schedule` can be changed after running the scheduling algorithm.
 
 [[Design-Storage]]
 === Storage component
@@ -150,90 +185,133 @@ The `Storage` component,
 Classes used by multiple components are in the `seedu.addressbook.commons` package.
 
 == Implementation
-
 This section describes some noteworthy details on how certain features are implemented.
 
-// tag::undoredo[]
-=== [Proposed] Undo/Redo feature
-==== Proposed Implementation
+=== Add Interviewee/Interviewer feature
+The add command is facilitated by the `AddCommandParser` class. It extends `AddCommandParser` by allowing it to parse
+prefixes specific to our Scheduler app, namely:
 
-The undo/redo mechanism is facilitated by `VersionedAddressBook`.
-It extends `AddressBook` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`.
-Additionally, it implements the following operations:
+* r/ROLE
+* f/FACULTY
+* ep/PERSONAL_EMAIL and ew/NUS_WORK_EMAIL
+* y/YEAR_OF_STUDY
+* d/DEPARTMENT
+* s/SLOT
 
-* `VersionedAddressBook#commit()` -- Saves the current address book state in its history.
-* `VersionedAddressBook#undo()` -- Restores the previous address book state from its history.
-* `VersionedAddressBook#redo()` -- Restores a previously undone address book state from its history.
+This command also requires access to the Model package, where the AddressBook implementation lives, as well as the
+Storage package, where the `JsonSerializableAddressBook` implementation lives. Consequently, the following json-friendly
+classes were added:
 
-These operations are exposed in the `Model` interface as `Model#commitAddressBook()`, `Model#undoAddressBook()` and `Model#redoAddressBook()` respectively.
+* JsonAdaptedInterviewee, JsonAdaptedInterviewer, JsonAdaptedDepartment, JsonAdaptedSlot
 
-Given below is an example usage scenario and how the undo/redo mechanism behaves at each step.
+The following *sequence diagram* describes how the add command works when adding an interviewee:
 
-Step 1. The user launches the application for the first time. The `VersionedAddressBook` will be initialized with the initial address book state, and the `currentStatePointer` pointing to that single address book state.
+image::AddSequenceDiagram_1_2.png[]
 
-image::UndoRedoState0.png[]
+The following activity diagram shows the steps needed to add a new interviewee:
 
-Step 2. The user executes `delete 5` command to delete the 5th person in the address book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
+image::AddActivityDiagram_1_2.png[]
 
-image::UndoRedoState1.png[]
+=== [Coming soon in v1.3] Scheduling Algorithm
+The scheduling of interviews is essentially a https://www.geeksforgeeks.org/maximum-bipartite-matching/[maximum bipartite matching problem].
+The application is trying to find the **maximum number of matching** between available interview slots
+and interviewees.
 
-Step 3. The user executes `add n/David ...` to add a new person. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`.
+In this application, the selected algorithm is https://www.geeksforgeeks.org/hopcroft-karp-algorithm-for-maximum-matching-set-1-introduction/[hopcroft-karp algorithm].
+The complexity of the algorithm is o(√v x e), which is reasonably fast. The relevant details of the algorithm are as below:
 
-image::UndoRedoState2.png[]
+**Vertex**
 
-[NOTE]
-If a command fails its execution, it will not call `Model#commitAddressBook()`, so the address book state will not be saved into the `addressBookStateList`.
+**Edge**
 
-Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state.
+**Matching Criteria** +
+An interviewee matches an interview slot if **all** the criteria below are fulfilled:
 
-image::UndoRedoState3.png[]
+. The timing of the slot matches one of the available timings of the interviewee.
+. The department of the time slot matches the department of choice of the interviewee.
 
-[NOTE]
-If the `currentStatePointer` is at index 0, pointing to the initial address book state, then there are no previous address book states to restore. The `undo` command uses `Model#canUndoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the undo.
+**Brief Explanation of the Algorithm** +
+Include an **activity diagram** here to summarise the algorithm.
 
-The following sequence diagram shows how the undo operation works:
+The proposed implementation of this algorithm is to encapsulate the logic of the algorithm into a `Command` class under
+`Logic` component, possibly with the help of some auxiliary classes. The command is then invoked when the user key in the relevant
 
-image::UndoSequenceDiagram.png[]
+command keyword (refer user guide).
 
-NOTE: The lifeline for `UndoCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
+When the scheduling algorithm has finished running, it will update the data in the `Schedule` objects to reflect the
+allocated time slots to the interviewees, which the changes will then be reflected automatically in the UI.
 
-The `redo` command does the opposite -- it calls `Model#redoAddressBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the address book to that state.
 
-[NOTE]
-If the `currentStatePointer` is at index `addressBookStateList.size() - 1`, pointing to the latest address book state, then there are no undone address book states to restore. The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
+=== Import
+==== Implementation
 
-Step 5. The user then decides to execute the command `list`. Commands that do not modify the address book, such as `list`, will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`. Thus, the `addressBookStateList` remains unchanged.
+The import feature uses `CsvReader` in the Model to read the given .csv file and stores the data into the model.
 
-image::UndoRedoState4.png[]
+* `import interviewer <csv file>` stores the read data as a list of `Schedule` objects in the model.
+* `import interviewee <csv file>` stores the read data as a list of `Interviewee` objects in the model.
+* `CsvReader` makes use of `BufferedReader` to read data from the given file.
 
-Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all address book states after the `currentStatePointer` will be purged. We designed it this way because it no longer makes sense to redo the `add n/David ...` command. This is the behavior that most modern desktop applications follow.
+image::ImportSequenceDiagram.png[]
+Given above is an example of a sequence diagram for importing interviewer's schedules. It applies to both importing interviewee's and interviewer's data.
 
-image::UndoRedoState5.png[]
+As seen in the above sequence diagram, the execution of the import feature consists of these steps:
+
+* Step 1: `LogicManager` will start executing the command by parsing it over to `AddressBookParser`.
+* Step 2: `AddressBookParser` will then look and initialise an `ImportCommand` instance and return it to `LogicManager`.
+* Step 3: `LogicManager` will then call execute() on the returned `ImportCommand`  object.
+* Step 4: During the execute() method, the method will initialise a `CsvReader` object to `read()` data from the the given .csv file.
+* Step 5: The read data will then be stored as either `scheduleList` or `intervieweeList` in the model.
 
 The following activity diagram summarizes what happens when a user executes a new command:
 
-image::CommitActivityDiagram.png[]
+image::ImportActivityDiagram.png[]
 
-==== Design Considerations
 
-===== Aspect: How undo & redo executes
+=== [Coming soon in v1.3] Export
+==== Implementation [Proposed]
+The Export command gets the scheduled time slots from the Model and writes them in the specified .csv file.
+CsvWriter facilitates the writing to the specified file.
 
-* **Alternative 1 (current choice):** Saves the entire address book.
-** Pros: Easy to implement.
-** Cons: May have performance issues in terms of memory usage.
-* **Alternative 2:** Individual command knows how to undo/redo by itself.
-** Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
-** Cons: We must ensure that the implementation of each individual command are correct.
+* CsvWriter makes use of `BufferedWriter` to write data into the specified file.
 
-===== Aspect: Data structure to support the undo/redo commands
+Below shows the sequence diagram of an example export command.
 
-* **Alternative 1 (current choice):** Use a list to store the history of address book states.
-** Pros: Easy for new Computer Science student undergraduates to understand, who are likely to be the new incoming developers of our project.
-** Cons: Logic is duplicated twice. For example, when a new command is executed, we must remember to update both `HistoryManager` and `VersionedAddressBook`.
-* **Alternative 2:** Use `HistoryManager` for undo/redo
-** Pros: We do not need to maintain a separate list, and just reuse what is already in the codebase.
-** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things.
-// end::undoredo[]
+image::ExportSequenceDiagram.png[]
+
+The implementation is very similar to the Import feature. The only differences are in the Model where CsvWriter gets
+the scheduled time slots from the Model and proceeds to write it into the specified file using a `BufferedWriter`.
+
+The Activity Diagram below summarises the execution of the export command.
+
+image::ExportActivityDiagram.png[]
+
+
+=== [Coming soon in v1.3] Email
+==== Implementation
+
+The Email feature makes use of the `java.awt.Desktop` package to activate the default Mail client of the user.
+
+* The `To:` field is automatically populated with all the emails that are tagged to a particular Interviewee.
+* The `Cc:` field is configurable by the user via an optional configuration file.
+* The subject and message body are also automatically populated with details that are relevant to the Interviewee, depending on the context of the command used.
+
+image::EmailSequenceDiagram.png[]
+
+===== Example: Interview timeslot
+
+This is for sending the email to the Interviewee of his/her allocated interview timeslot. Details that vary according to the Interviewee include:
+
+* Date and time of allocated timeslot
+* Interviewer allocated
+
+Additional details that can be configured by the user include:
+
+* Location to report
+* Dress code
+* Any other additional information
+
+The message content can also be configured by the user. However, a default template will be used when no such configuration file exists or is provided.
+
 
 === Display Schedule Feature
 ==== Proposed Implementation
@@ -269,10 +347,7 @@ Step 9. ScheduleViewPanel will firstly clear all the data and input the updated 
 
 // tag::dataencryption[]
 === [Proposed] Data Encryption
-
-_{Explain here how the data encryption feature will be implemented}_
-
-// end::dataencryption[]
+=======
 
 === Logging
 
@@ -288,7 +363,7 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 * `INFO` : Information showing the noteworthy actions by the App
 * `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
 
-[[Implementation-Configuration]]
+[Implementation-Configuration]
 === Configuration
 
 Certain properties of the application can be controlled (e.g user prefs file location, logging level) through the configuration file (default: `config.json`).
@@ -348,9 +423,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |secretary of NUS CCA |be informed if interview allocation of a certain interviewee has failed |manually fix conflicts or get the interviewee to give another available timeslot
 
-|`* * *` |secretary of NUS CCA |automate the process of scheduling interviews |lighten my workload
+|`* * *` |very busy secretary of NUS CCA |automate the process of scheduling interviews |lighten my workload
 
-|`* * *` |secretary of NUS CCA |mark an interviewee as 'completed interview' |track and manage uncompleted interviews
+|`* * *` |forgetful secretary of NUS CCA |mark an interviewee as 'completed interview' |track and manage uncompleted interviews
 
 |`* * *` |secretary of NUS CCA |add multiple tags to an interviewee in a single command |I can be efficient
 
@@ -366,7 +441,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |secretary of NUS CCA |schedule group interviews |I can use less manpower on days that I do not have enough interviewers
 
-|`* *` |secretary of NUS CCA |share the current scheduled timeslots with another secretary |give them access to help with the scheduling of interviews as well
+|`* *` |busy secretary of NUS CCA |share the current scheduled timeslots with another secretary |give them access to help with the scheduling of interviews as well
 
 |`* *` |secretary of NUS CCA |email the interview results to interviewees |inform them of the outcomes of the interview
 
