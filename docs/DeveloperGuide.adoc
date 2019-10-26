@@ -236,6 +236,8 @@ Include an **activity diagram** here to summarise the algorithm.
 The proposed implementation of this algorithm is to encapsulate the logic of the algorithm into a `Command` class under
 `Logic` component, possibly with the help of some auxiliary classes. The command is then invoked when the user key in the relevant
 
+The proposed implementation of this algorithm is to encapsulate the logic of the algorithm into a `Command` class under
+`Logic` component, possibly with the help of some auxiliary classes. The command is then invoked when the user key in the relevant
 command keyword (refer user guide).
 
 When the scheduling algorithm has finished running, it will update the data in the `Schedule` objects to reflect the
@@ -346,7 +348,6 @@ Step 9. ScheduleViewPanel will firstly clear all the data and input the updated 
 
 // tag::dataencryption[]
 === [Proposed] Data Encryption
-=======
 
 === Logging
 
