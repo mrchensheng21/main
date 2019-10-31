@@ -24,7 +24,7 @@ public class ScheduleViewPanel extends UiPart<Region> {
     @FXML
     private StackPane container;
 
-    ScheduleViewPanel(
+    public ScheduleViewPanel(
             List<List<String>> titles, List<ObservableList<ObservableList<String>>> scheduleList) {
         super(FXML);
         this.scheduleList = scheduleList;
@@ -32,6 +32,7 @@ public class ScheduleViewPanel extends UiPart<Region> {
         this.titles = titles;
         fillPanel();
     }
+
     /**
      * Fill the panel with the tables that is retrieved from scheduleView class.
      */
@@ -46,12 +47,12 @@ public class ScheduleViewPanel extends UiPart<Region> {
 
     /**
      * Fill the panel when user import data.
-     * @param titles Lists of titles for the schedules
-     * @param scheduleList Lists of observable data for TableView.
      */
-    protected void fillPanel(
-            List<List<String>> titles,
-            List<ObservableList<ObservableList<String>>> scheduleList) {
+    public void dataUpdated(List<List<String>> titles, List<ObservableList<ObservableList<String>>> newSchedules) {
+        clearData();
+        this.titles = titles;
+        this.scheduleList = newSchedules;
+
         for (int i = 0; i < scheduleList.size(); i++) {
             scheduleViewList.add(new ScheduleView(titles.get(i), scheduleList.get(i)));
         }
@@ -60,8 +61,8 @@ public class ScheduleViewPanel extends UiPart<Region> {
         }
     }
 
-    protected void refresh() {
-        this.scheduleViewList.removeAll(this.scheduleViewList);
+    protected void clearData() {
+        this.scheduleViewList.clear();
     }
 }
 

@@ -111,12 +111,18 @@ interviewee allocated to each time slots. The slot that has no interviewee will 
 
 Step 6. Once the data is populated, the MainWindow will display the schedules of each day arranged in a table format.
 
-Step 7. Once User imports a new .csv file, it will call the RefreshListener Interface. RefreshListenerManager will then take in the new titles and
+image::ScheduleViewSequenceDiagram.png[]
+
+==== UI Refresh
+
+Step 1. Once User imports a new .csv file, it will call the RefreshListener Interface. RefreshListenerManager will then take in the new titles and
 list of ObservableList of interviewee.
 
-Step 8. The RefreshListenerManager will call the MainWindow to refresh the ScheduleViewPanel.
+Step 2. The RefreshListenerManager will call the MainWindow to refresh the ScheduleViewPanel.
 
-Step 9. ScheduleViewPanel will firstly clear all the data and input the updated data from the .csv file.
+Step 3  . ScheduleViewPanel will firstly clear all the data and input the updated data from the .csv file.
+
+image::ImportUIRefreshSequenceDiagram.png[]
 
 [[Design-Logic]]
 === Logic component
@@ -269,7 +275,7 @@ The following activity diagram summarizes what happens when a user executes a ne
 image::ImportActivityDiagram.png[]
 
 
-=== [Coming soon in v1.3] Export
+=== [Coming soon in v1.4] Export
 ==== Implementation [Proposed]
 The Export command gets the scheduled time slots from the Model and writes them in the specified .csv file.
 CsvWriter facilitates the writing to the specified file.
@@ -288,7 +294,7 @@ The Activity Diagram below summarises the execution of the export command.
 image::ExportActivityDiagram.png[]
 
 
-=== [Coming soon in v1.3] Email
+=== [Coming soon in v1.4] Email
 ==== Implementation
 
 The Email feature makes use of the `java.awt.Desktop` package to activate the default Mail client of the user.
@@ -306,7 +312,7 @@ This is for sending the email to the Interviewee of his/her allocated interview 
 * Date and time of allocated timeslot
 * Interviewer allocated
 
-Additional details that can be configured by the user include:
+Additional details that can be configured by the user (as user preferences) include:
 
 * Location to report
 * Dress code
