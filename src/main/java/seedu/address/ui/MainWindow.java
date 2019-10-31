@@ -35,7 +35,6 @@ public class MainWindow extends UiPart<Stage> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private PersonListPanel personListPanel;
     private IntervieweeListPanel intervieweeListPanel;
     private InterviewerListPanel interviewerListPanel;
     private ResultDisplay resultDisplay;
@@ -64,19 +63,19 @@ public class MainWindow extends UiPart<Stage> {
     private Tab schedulesTab;
 
     @FXML
-    private AnchorPane schedulesPlaceholder;
+    private StackPane schedulesPlaceholder;
 
     @FXML
     private Tab intervieweeListTab;
 
     @FXML
-    private AnchorPane intervieweeListPlaceholder;
+    private StackPane intervieweeListPlaceholder;
 
     @FXML
     private Tab interviewerListTab;
 
     @FXML
-    private AnchorPane interviewerListPlaceholder;
+    private StackPane interviewerListPlaceholder;
 
     public MainWindow(Stage primaryStage, Logic logic) {
         super(FXML, primaryStage);
@@ -136,18 +135,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     void fillInnerParts() {
         scheduleViewPanel = new ScheduleViewPanel(logic.getTitlesLists(), logic.getObservableLists());
-        // schedulePanelPlaceholder.getChildren().add(scheduleViewPanel.getRoot());
-
-        // ========================================test code for debug purposes
-        // personListPanel = new PersonListPanel(logic.getFilteredIntervieweeList());
-        intervieweeListPanel = new IntervieweeListPanel(logic.getFilteredIntervieweeList());
-        intervieweeListPlaceholder.getChildren().add(intervieweeListPanel.getRoot());
-
-        interviewerListPanel = new InterviewerListPanel(logic.getFilteredInterviewerList());
-        interviewerListPlaceholder.getChildren().add(interviewerListPanel.getRoot());
-
-        schedulesPlaceholder.getChildren().add(scheduleViewPanel.getRoot());
-        // ========================================end of test code
+        schedulePanelPlaceholder.getChildren().add(scheduleViewPanel.getRoot());
 
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -197,10 +185,6 @@ public class MainWindow extends UiPart<Stage> {
         logic.setGuiSettings(guiSettings);
         helpWindow.hide();
         primaryStage.hide();
-    }
-
-    public PersonListPanel getPersonListPanel() {
-        return personListPanel;
     }
 
     public ScheduleViewPanel getScheduleViewPanel() {
