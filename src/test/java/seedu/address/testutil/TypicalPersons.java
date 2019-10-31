@@ -33,23 +33,8 @@ import seedu.address.model.person.Person;
  * A utility class containing a list of {@code Person} objects to be used in tests.
  */
 public class TypicalPersons {
-
-    public static final Interviewee ANSON = new IntervieweeBuilder(new PersonBuilder().withName("Anson Pauline")
-            .withPhone("94351253").withTags("friends").build())
-            .withFaculty("School of computing")
-            .withYearOfStudy("2019")
-            .withDepartmentChoices("Marketing")
-            .withTimeslots("16/10/2019 00:00-23:59")
-            .withPersonalEmail("anson@gmail.com")
-            .build();
-
-    public static final Interviewer IAN = new InterviewerBuilder(new PersonBuilder().withName("Ian Scotch")
-            .withPhone("91234567").withTags("senior").build())
-            .withDepartment("Technical")
-            .withEmail("test@example.com")
-            .withAvailabilities("23/10/2019 00:00-23:59")
-            .build();
-
+    
+    // Persons
     public static final Person ALICE = new PersonBuilder().withName("Alice Pauline")
             .withPhone("94351253").withTags("friends").build();
     public static final Person BENSON = new PersonBuilder().withName("Benson Meier")

@@ -1,10 +1,13 @@
 package seedu.address.ui;
 
+import java.util.Comparator;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+
 import seedu.address.model.person.Interviewee;
 
 import java.util.Comparator;
@@ -24,15 +27,13 @@ public class IntervieweeCard extends UiPart<Region> {
     public final Interviewee interviewee;
 
     @FXML
-    private HBox cardPane;
+    private HBox intervieweeCardPane;
     @FXML
     private Label name;
     @FXML
     private Label id;
     @FXML
     private Label phone;
-    @FXML
-    private Label address;
     @FXML
     private FlowPane tags;
 
@@ -55,7 +56,7 @@ public class IntervieweeCard extends UiPart<Region> {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof PersonCard)) {
+        if (!(other instanceof IntervieweeCard)) {
             return false;
         }
 
@@ -63,5 +64,6 @@ public class IntervieweeCard extends UiPart<Region> {
         IntervieweeCard card = (IntervieweeCard) other;
         return id.getText().equals(card.id.getText())
                 && interviewee.equals(card.interviewee);
+
     }
 }
