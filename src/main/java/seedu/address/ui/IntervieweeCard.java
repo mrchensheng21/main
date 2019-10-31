@@ -23,7 +23,7 @@ public class IntervieweeCard extends UiPart<Region> {
 
     public final Interviewee interviewee;
 
-    @javafx.fxml.FXML
+    @FXML
     private HBox cardPane;
     @FXML
     private Label name;
