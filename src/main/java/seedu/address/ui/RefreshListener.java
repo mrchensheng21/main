@@ -10,6 +10,6 @@ public interface RefreshListener {
     /**
      * Refresh the Ui when data is imported from .csv file.
      */
-    void dataImported(MainWindow window, Logic logic);
+    void dataImported();
 
 }
