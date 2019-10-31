@@ -1,12 +1,12 @@
 package seedu.address.ui;
 
-
 import javafx.fxml.FXML;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 
 
 /**
- * An UI component that displays information of a {@code Interviewer}.
+ * An UI component that displays information of a {@code ScheduleViewCard}.
  */
 public class ScheduleViewCard extends UiPart<Region> {
 
@@ -19,14 +19,10 @@ public class ScheduleViewCard extends UiPart<Region> {
      *
      * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on AddressBook level 4</a>
      */
-
     public final ScheduleView schedule;
 
     @FXML
     private StackPane scheduleViewPane;
-
-    @FXML
-    private FlowPane scheduleViews;
 
     public ScheduleViewCard(ScheduleView schedule) {
         super(FXML);
