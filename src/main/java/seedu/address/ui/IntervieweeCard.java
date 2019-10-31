@@ -10,8 +10,9 @@ import javafx.scene.layout.Region;
 
 import seedu.address.model.person.Interviewee;
 
-import java.util.Comparator;
-
+/**
+ * An UI component that displays information of a {@code Interviewee}.
+ */
 public class IntervieweeCard extends UiPart<Region> {
 
     private static final String FXML = "IntervieweeListCard.fxml";

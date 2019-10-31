@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import java.util.logging.Logger;
+
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
@@ -7,11 +9,11 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.person.Interviewee;
-import seedu.address.model.person.Person;
 
-import java.util.logging.Logger;
-
-public class IntervieweeViewPanel extends UiPart<Region>{
+/**
+ * Panel consisting a list of interviewees
+ */
+public class IntervieweeViewPanel extends UiPart<Region> {
     private static final String FXML = "IntervieweeViewPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(PersonListPanel.class);
 

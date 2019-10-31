@@ -1,7 +1,5 @@
 package seedu.address.ui;
 
-import seedu.address.logic.Logic;
-
 /**
  * API of refresh listener.
  */
