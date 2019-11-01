@@ -10,7 +10,6 @@ import javafx.scene.layout.StackPane;
 public class ScheduleViewCard extends UiPart<Region> {
 
     private static final String FXML = "ScheduleViewCard.fxml";
-    
     public final ScheduleView schedule;
 
     @FXML
