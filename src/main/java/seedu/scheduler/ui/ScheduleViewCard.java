@@ -1,8 +1,10 @@
-package seedu.address.ui;
+package seedu.scheduler.ui;
 
 import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import seedu.scheduler.ui.ScheduleView;
+import seedu.scheduler.ui.UiPart;
 
 
 /**
