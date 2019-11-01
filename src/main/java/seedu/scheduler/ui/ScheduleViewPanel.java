@@ -37,6 +37,9 @@ public class ScheduleViewPanel extends UiPart<Region> {
         fillPanel();
     }
 
+    /**
+     * Fill the schedule view panel with schedule tables.
+     */
     private void fillPanel() {
         for (int i = 0; i < this.scheduleList.size(); i++) {
             scheduleViewList.add(new ScheduleView(this.titles.get(i), this.scheduleList.get(i)));
@@ -47,8 +50,9 @@ public class ScheduleViewPanel extends UiPart<Region> {
         scheduleListView.setItems(scheduleViewsObservable);
         scheduleListView.setCellFactory(listView -> new ScheduleListViewCell());
     }
+
     /**
-     * Custom {@code ListCell} that displays the graphics of a {@code Person} using a {@code PersonCard}.
+     * Custom {@code ListCell} that displays the graphics of a {@code ScheduleView} using a {@code ScheduleViewCard}.
      */
     class ScheduleListViewCell extends ListCell<ScheduleView> {
         @Override
@@ -64,6 +68,11 @@ public class ScheduleViewPanel extends UiPart<Region> {
         }
     }
 
+    /**
+     * Update table with new data from import.
+     * @param titles The new column titles.
+     * @param newSchedules The new data consisting of different schedules.
+     */
     public void dataUpdated(List<List<String>> titles, List<ObservableList<ObservableList<String>>> newSchedules) {
         clearData();
         this.titles = titles;
@@ -78,6 +87,9 @@ public class ScheduleViewPanel extends UiPart<Region> {
         scheduleListView.setCellFactory(listView -> new ScheduleListViewCell());
     }
 
+    /**
+     * Clear the data in UI.
+     */
     protected void clearData() {
         this.scheduleViewList.clear();
     }
