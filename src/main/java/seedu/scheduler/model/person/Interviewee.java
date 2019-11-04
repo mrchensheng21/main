@@ -3,6 +3,7 @@ package seedu.scheduler.model.person;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 import seedu.scheduler.model.tag.Tag;
@@ -18,6 +19,7 @@ public class Interviewee extends Person {
     private final List<Slot> availableTimeslots;
     private final Emails emails; // personal, NUS emails etc
     private InterviewSlot allocatedSlot;
+    private boolean emailSent;
 
     /**
      * Every field must be present and not null.
@@ -32,6 +34,7 @@ public class Interviewee extends Person {
         this.availableTimeslots = availableTimeslots;
         this.allocatedSlot = null;
         this.emails = emails;
+        this.emailSent = false;
     }
 
     /**
@@ -128,12 +131,15 @@ public class Interviewee extends Person {
         return availableTimeslots;
     }
 
-    public Emails getEmails() {
-        return emails;
-    }
-
-    public InterviewSlot getAllocatedSlot() {
-        return allocatedSlot;
+    /**
+     * Returns the allocated slot of the interviewee if any, otherwise returns an empty Optional.
+     */
+    public Optional<InterviewSlot> getAllocatedSlot() {
+        if (allocatedSlot != null) {
+            return Optional.of(allocatedSlot);
+        } else {
+            return Optional.empty();
+        }
     }
 
     public void setAllocatedSlot(InterviewSlot slot) {
@@ -142,6 +148,18 @@ public class Interviewee extends Person {
 
     public void clearAllocatedSlot() {
         this.allocatedSlot = null;
+    }
+
+    public Emails getEmails() {
+        return emails;
+    }
+
+    public boolean getEmailSent() {
+        return this.emailSent;
+    }
+
+    public void setEmailSent(boolean flag) {
+        this.emailSent = flag;
     }
 
     /**
@@ -154,8 +172,7 @@ public class Interviewee extends Person {
         }
 
         return interviewee != null
-                && interviewee.getName().equals(getName())
-                && interviewee.getPhone().equals(getPhone());
+                && interviewee.getName().equals(getName());
     }
 
     /**

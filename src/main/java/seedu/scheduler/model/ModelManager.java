@@ -2,9 +2,11 @@ package seedu.scheduler.model;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.scheduler.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.scheduler.logic.commands.EmailCommand.EMAIL_MESSAGE_BODY;
 
 import java.awt.Desktop;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URLEncoder;
 import java.nio.file.Path;
@@ -17,7 +19,9 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.function.Predicate;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
@@ -26,6 +30,7 @@ import javafx.collections.transformation.FilteredList;
 import seedu.scheduler.commons.core.GuiSettings;
 import seedu.scheduler.commons.core.LogsCenter;
 import seedu.scheduler.model.person.Department;
+import seedu.scheduler.model.person.InterviewSlot;
 import seedu.scheduler.model.person.Interviewee;
 import seedu.scheduler.model.person.Interviewer;
 import seedu.scheduler.model.person.Name;
@@ -33,14 +38,16 @@ import seedu.scheduler.model.person.Slot;
 import seedu.scheduler.model.person.exceptions.PersonNotFoundException;
 import seedu.scheduler.ui.RefreshListener;
 
+
 /**
  * Represents the in-memory model of the schedule table data.
  */
 public class ModelManager implements Model {
-    private static List<Schedule> emptyScheduleList = new ArrayList<>();
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
+    private static List<Schedule> emptyScheduleList = new ArrayList<>();
 
     private final UserPrefs userPrefs;
+    private final AppStatus appStatus;
     private final List<Schedule> schedulesList;
 
     private final IntervieweeList intervieweeList; // functionality not stable, refrain from using
@@ -71,13 +78,25 @@ public class ModelManager implements Model {
 
         this.schedulesList = cloneSchedulesList(schedulesList);
         this.userPrefs = new UserPrefs(userPrefs);
+        this.appStatus = AppStatus.getInstance();
     }
 
     public ModelManager() {
         this(new IntervieweeList(), new InterviewerList(), new UserPrefs(), new LinkedList<>());
     }
 
-    // ==================================IntervieweeList and InterviewerList ======================================
+    // ================================== AppStatus ======================================
+    @Override
+    public void setScheduled(boolean scheduled) {
+        this.appStatus.setScheduled(scheduled);
+    }
+
+    @Override
+    public boolean isScheduled() {
+        return this.appStatus.isScheduled();
+    }
+
+    // ================================== IntervieweeList and InterviewerList ======================================
 
     @Override
     public void setIntervieweeList(List<Interviewee> interviewees) {
@@ -151,6 +170,7 @@ public class ModelManager implements Model {
     @Override
     public void addInterviewer(Interviewer interviewer) {
         interviewerList.addEntity(interviewer);
+        this.updateScheduleList();
     }
 
     /**
@@ -224,11 +244,13 @@ public class ModelManager implements Model {
     @Override
     public void deleteInterviewee(Interviewee target) throws PersonNotFoundException {
         intervieweeList.removeEntity(target);
+        this.updateScheduleList();
     }
 
     @Override
     public void deleteInterviewer(Interviewer target) throws PersonNotFoundException {
         interviewerList.removeEntity(target);
+        this.updateScheduleList();
     }
 
     @Override
@@ -263,18 +285,48 @@ public class ModelManager implements Model {
                 })
                 .reduce((x, y) -> x + "; " + y).get();
 
+        String ccEmails = this.userPrefs.getCcEmails().stream()
+                .reduce((x, y) -> x + "; " + y)
+                .get();
+
         String sb = "mailto:"
-                + URLEncoder.encode(intervieweeEmails,
-                java.nio.charset.StandardCharsets.UTF_8.toString()).replace("+", "%20")
-                + "?cc=" + "copied@example.com" + "&subject="
-                + URLEncoder.encode("This is a test subject",
-                java.nio.charset.StandardCharsets.UTF_8.toString()).replace("+", "%20")
+                + encodeForEmail(intervieweeEmails)
+                + "?cc=" + encodeForEmail(ccEmails)
+                + "&subject="
+                + encodeForEmail(this.userPrefs.getEmailSubject())
                 + "&body="
-                + URLEncoder.encode(intervieweeEmails,
-                java.nio.charset.StandardCharsets.UTF_8.toString()).replace("+", "%20");
+                + encodeForEmail(getEmailBody(interviewee));
         URI uri = URI.create(sb);
         desktop.mail(uri);
     }
+
+    /**
+     * This method encodes the given String into a format that can be used to generate the email message
+     * contents.
+     * @param input The String to encode
+     * @return The encoded message
+     */
+    public String encodeForEmail(String input) {
+        try {
+            return URLEncoder.encode(input,
+                    java.nio.charset.StandardCharsets.UTF_8.toString()).replace("+", "%20");
+        } catch (UnsupportedEncodingException e) {
+            return "";
+        }
+    }
+
+    public String getEmailBody(Interviewee interviewee) {
+        // TODO: Uncomment after "schedule" command is implemented!
+        // String slots = this.getInterviewSlots(interviewee.getName().toString()).stream()
+        //         .map(Slot::toString)
+        //         .reduce((x, y) -> x + ", " + y)
+        //         .get();
+        String slots = "01/11/2019 12:00-14:00";
+
+        return String.format(EMAIL_MESSAGE_BODY, interviewee.getName(), this.userPrefs.getOrganisation(),
+                slots, this.userPrefs.getInterviewLocation(), this.userPrefs.getEmailAdditionalInformation());
+    }
+
     // ================================== Refresh Listener ======================================
     public void addRefreshListener(RefreshListener listener) {
         this.refreshListener = listener;
@@ -390,6 +442,7 @@ public class ModelManager implements Model {
 
     /**
      * Replaces schedule data with the data in {@code schedule}.
+     * @param list
      */
     @Override
     public void setSchedulesList(List<Schedule> list) {
@@ -401,6 +454,18 @@ public class ModelManager implements Model {
         logger.fine("Schedules list is reset");
     }
 
+    /**
+     * Updates schedule list with an empty schedule list.
+     */
+    private void updateScheduleList() {
+        try {
+            this.setEmptyScheduleList();
+            List<Schedule> schedules = this.getEmptyScheduleList();
+            this.setSchedulesList(schedules);
+        } catch (ParseException e) {
+            logger.log(Level.WARNING, "Should not have exceptions");
+        }
+    }
 
     @Override
     public void addInterviewerToSchedule(Interviewer interviewer) {
@@ -426,15 +491,11 @@ public class ModelManager implements Model {
     }
 
     /**
-     * Returns a list of interview slots assigned to the interviewee with the {@code intervieweeName}.
+     * Returns the interview slot allocated to the interviewee with the {@code intervieweeName}.
      */
     @Override
-    public List<Slot> getInterviewSlots(String intervieweeName) {
-        List<Slot> slots = new LinkedList<>();
-        for (Schedule schedule : schedulesList) {
-            slots.addAll(schedule.getInterviewSlots(intervieweeName));
-        }
-        return slots;
+    public Optional<InterviewSlot> getInterviewSlot(String intervieweeName) {
+        return intervieweeList.getEntity(new Name(intervieweeName)).getAllocatedSlot();
     }
 
     /**

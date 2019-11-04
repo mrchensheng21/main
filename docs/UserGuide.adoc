@@ -52,6 +52,40 @@ image::quickstart/4_excel.png[width="500", align="left"]
 
 image::quickstart/5_excel.png[width="500", align="left"]
 
+
+== User Preferences
+Scheduler is initialised with default user preferences.
+
+If you wish to make changes to the user preferences, do the following steps: +
+
+* Step 1: Run scheduler.jar at least once. You should notice new files added to the folder containing the application.
+* Step 2: Open preferences.json using any word editor, eg. notepad.
+* Step 3: Edit the relevant user preference fields.
+
+The details of each user preference field is explained further in the following sections.
+
+=== Working Hours
+Each time slot, that an interviewer or interviewee indicates, must be within the `startTime` and `endTime` of the pre-defined
+working hours for it to be displayed in the schedules.
+
+*Format:* +
+`startTime` and `endTime` are defined as strings. It has to follow the string format "HH:mm".
+
+*Default values:* +
+`startTime`: "10:00" +
+`endTime`: "21:00"
+
+=== Duration of Time slot
+Each time slot, that an interviewer or interviewee indicates, must be strictly of this pre-defined duration for it to be
+ displayed in the schedules. It is represented by `duration` in the user preference file.
+
+*Format:* +
+`duration` is defined as a positive integer representing the number of minutes of each time slot.
+
+*Default values:* +
+`duration`: 30
+
+
 [[Features]]
 == Features
 
@@ -77,19 +111,37 @@ The templates for the import commands can be found here:
 After you have imported the data, you will need to type `clear` to clear the imported data before you can import another interviewer's
 availability or interviewees details .csv file.
 
+[NOTE]
+* Data in .csv file must follow the settings defined in the user preference file. View <<User Prefences, User Prefences>> if you wish to change the
+default settings.
+* Data to be imported should only be in english and should strictly follow the format of the templates given above.
+
 ==== Importing interviewers’ availability
 Imports interviewers’ availability from a comma separated values (CSV) file.
+
+* A "1" in a timeslot represents AVAILABLE and "0" represents UNAVAILABLE.
+* The headers should also be in the format `DEPARTMENT - INTERVIEWER'S_NAME`.
+* Each timeslot should also be in the format `HH:mm - HH:mm`.
+
+[Note]
+The schedule displayed will only show timeslots from 10:00 to 21:00 daily.
 
 Format: `import interviewer PATH_TO_FILE` +
     - PATH_TO_FILE is the absolute path to the file. +
     - E.g C:\\Users\Bob\file.csv
+
+
 
 Example:
 
  import interviewer C:\Users\johndoe\Interviewers.csv
 
 ==== Importing interviewees’ availability
-Imports interviewees’ availability from a comma separated values (CSV) file. +
+Imports interviewees’ availability from a comma separated values (CSV) file.
+
+* Emails: Adding more than 1 personal or work email is allowed. Use whitespaces to separate each email.
+* Timeslots: Each timeslot should be in the format `HH:mm - HH:mm`. Use commas to separate the timeslots if there are more than 1.
+
 Format: `import interviewee PATH_TO_FILE` +
     - PATH_TO_FILE is the absolute path to the file. +
     - E.g C:\\Users\Bob\file.csv
@@ -116,7 +168,7 @@ Format: add `r/interviewee` `n/NAME` `p/PHONE` `[t/TAG]...` `f/FACULTY` `ep/PERS
 
 Example:
 
- add r/interviewee n/John Doe p/88888888 t/CAP5 t/dog lover f/School of Computing ep/JohnDoe@gmail.com ew/JohnDoe@u.nus.edu y/2018 d/Marketing s/20/09/2019 18:00-19:00
+ add r/interviewee n/John Doe p/88888888 t/CAP5 t/dogLover f/School of Computing ep/JohnDoe@gmail.com ew/JohnDoe@u.nus.edu y/2018 d/Marketing s/20/09/2019 18:00-18:30
 
 * An interviewee can have multiple `s/SLOT`, `d/DEPARTMENT` and `t/TAG` arguments
 * Slots should be given in the format: `DD/MM/YYYY HH:MM-HH:MM`
@@ -130,9 +182,9 @@ Format: add `r/interviewer` `n/NAME` `p/PHONE` `[t/TAG]...` `d/DEPARTMENT` `ew/N
 
 Example:
 
- add r/interviewer n/Mary Jane p/99999999 ew/MaryJane@u.nus.edu d/Marketing s/20/09/2019 18:00-19:00
+ add r/interviewer n/Mary Jane p/99999999 ew/MaryJane@u.nus.edu d/Marketing s/20/09/2019 18:00-18:30
 
-=== Edit interviewees/interviewers
+=== Edit interviewees/interviewers `edit` `[Coming in v2.0]`
 Manually edit an entity in the database.
 
 Format: `edit NAME r/ROLE p/PHONE [t/TAG]... f/FACULTY ep/PERSONAL_EMAIL ew/NUS_WORK_EMAIL y/YEAR_OF_STUDY [d/DEPARTMENT]... [s/SLOT]...`
@@ -143,7 +195,7 @@ Format: `edit NAME r/ROLE p/PHONE [t/TAG]... f/FACULTY ep/PERSONAL_EMAIL ew/NUS_
 ** If `interviewee` is supplied, refer to "Edit an existing interviewee" below.
 ** If `interviewer` is supplied, refer to "Edit an existing interviewer" below.
 
-==== Edit an existing interviewee
+==== Edit an existing interviewee `[Coming in v2.0]`
 Manually edit an existing interviewee in the database.
 
 Format: edit `NAME` `r/interviewee` `p/PHONE` `[t/TAG]...` `f/FACULTY` `ep/PERSONAL_EMAIL` `ew/NUS_WORK_EMAIL` `y/YEAR_OF_STUDY`
@@ -151,7 +203,7 @@ Format: edit `NAME` `r/interviewee` `p/PHONE` `[t/TAG]...` `f/FACULTY` `ep/PERSO
 
 * `NAME` and `r/interviewee` are compulsory arguments, and one other argument following `r/interviewee` must be present.
 
-==== Edit an existing interviewer (interview slot)
+==== Edit an existing interviewer (interview slot) `[Coming in v2.0]`
 Manually edit an existing interviewer in the database.
 
 Format: edit `NAME` `r/interviewer` `p/PHONE` `[t/TAG]...` `d/DEPARTMENT` `ew/NUS_WORK_EMAIL` `s/SLOT...`
@@ -160,6 +212,8 @@ Format: edit `NAME` `r/interviewer` `p/PHONE` `[t/TAG]...` `d/DEPARTMENT` `ew/NU
 Manually delete an entity from the database.
 
 Format: `delete NAME r/ROLE`
+
+* Scheduler guarantees there cannot be multiple interviewees or interviewers with the same name.
 
 ==== Delete an existing interviewee
 Deletes the specified interviewee from the database.
@@ -192,7 +246,14 @@ A sample output of the Schedule UI is shown below:
 
 image::Ui/Schedule.png[width="500", align="left"]
 
-==== Viewing details of interviewees
+For v1.3, the format of the table is as follows.
+For the columns in the table, the first cell on the left will display the date of the schedule. It will be followed by the
+different departments of the interviewer. The rows display the time slots of availability of the interviewer. "0" represents
+that interviewer is unavailable and "1" represents that the interviewer is available.
+
+image::Ui/InterviewerSchedule.png[width="500", align="left"]
+
+==== Viewing details of interviewees [Coming soon in v1.4]
 You can to view the list of interviewees and the following information:
 1. Name
 2. NUS Email
@@ -248,26 +309,38 @@ Format: `export` +
 Note: This command requires the interview schedule to be generated first!
 
 === Sending of email `email`
-==== Sending of interview time slot to interviewee [Coming soon in v1.4]
-Sends an email containing the interviewee’s allocated interview time slot to a particular interviewee specified, including other details such as the interviewer, time, date and location.
+==== Sending of interview time slot to interviewee
+Opens an email dialog containing the interviewee’s allocated interview time slot to a particular interviewee specified, including other details such as the interviewer and location.
 
-Format: `email timeslot NAME`
+Format: `email ct/timeslot n/INTERVIEWEE NAME`
 
-**Note:** The email will only be sent if the interviewee’s email is present in the database and that the interview schedule has already been generated.
+**Note:** The email dialog will only appear if the interviewee’s email is present in the database and that the interview schedule has already been generated.
 
-==== Sending of interview time slot to all interviewees [Coming soon in v1.4]
-Sends an email containing the interviewee's allocated interview time slot to every interviewee, including other details such as the interviewer, time, date and location.
+==== Sending of interview time slot to all interviewees
+Opens an email dialog containing the interviewee's allocated interview time slot to every interviewee, including other details such as the interviewer and location. A summary report is then generated at the end of the command execution.
 
-Format: `email timeslots`
+Format: `email ct/alltimeslot`
 
-**Note:** The email will only be sent if the interviewee’s email is present in the database and that the interview schedule has already been generated.
+**Note:** The email dialog will only appear if the interviewee’s email is present in the database and that the interview schedule has already been generated.
 
-==== Sending of interview results to interviewees `[Coming in v2.0]`
-Sends an email containing the interviewee’s result/interview outcome and other details that you might want to include.
+==== Checking status of emails sent
+Provides a summary report of the number of interviewees with emails sent and the total number of interviewees stored in the database.
 
-Format: `email results`
+Format: `email ct/status`
 
-**Note:** This email will only be sent if the interviewee’s email is present in the database and that the interview schedule has already been generated.
+==== Sending of interview results to an interviewee `[Coming in v2.0]`
+Opens an email dialog containing the interviewee’s result/interview outcome and other details that you might want to include.
+
+Format: `email ct/results n/INTERVIEWEE NAME`
+
+**Note:** The email dialog will only appear if the interviewee's email is present in the database and the interview results has been updated.
+
+==== Sending of interview results to all interviewees `[Coming in v2.0]`
+Opens an email dialog containing the interviewee's result/interview outcome and other details that you might want to include for all interviewees.
+
+Format: `email ct/allresults`
+
+**Note:** The email dialog will only appear if the interviewee's email is present in the database and the interview results has been updated.
 
 === Recording of additional statuses: `record` `[Coming in v2.0]`
 ==== Recording of interviewee’s attendance
@@ -328,10 +401,10 @@ Format: `record rank`
 |Export
 |`export` +
 
-|Email blast
-|`email timeslots` +
- `email results` +
- `email status` +
+|Email interviewee
+|`email ct/timeslot n/INTERVIEWEE NAME` +
+ `email ct/alltimeslot` +
+ `email ct/status` +
 
 |Record
 |`record attendance` +
