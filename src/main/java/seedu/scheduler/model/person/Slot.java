@@ -9,25 +9,33 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import seedu.scheduler.commons.core.LogsCenter;
 import seedu.scheduler.logic.parser.exceptions.ParseException;
 
 /**
  * Represents an interview timeslot an {@code Interviewee} is allocated.
  */
 public class Slot implements Comparable<Slot> {
-
     public static final String STRING_FORMAT = "%s %s-%s";
     public static final String MESSAGE_CONSTRAINTS =
-            "A slot should follow this format: " + String.format(STRING_FORMAT, "dd/mm/yyyy", "hh:mm", "hh:mm");
+            "A slot must follow this format: " + String.format(STRING_FORMAT, "dd/mm/yyyy", "hh:mm", "hh:mm") + ".\n"
+            + "Constraints:\n"
+            + "The input date dd/mm/yyyy must be valid, i.e 30/02/2019 is an invalid date.\n"
+            + "A slot must also have a start time earlier than its end time.\n"
+            + "Examples:\n"
+            + "Correct: 03/12/2019 13:00-14:00\n"
+            + "Incorrect: 03/12/2019 13:00-13:00";
     public static final String DATETIME_PARSE_PATTERN = "dd/MM/yyyy HH:mm";
-    public static final String TIME_PARSE_PATTERN = "HH:mm";
     private static final Pattern SEPARATION_REGEX =
             Pattern.compile("(?<date>\\d{2}/\\d{2}/\\d{4}) (?<slot1>\\d{2}:\\d{2})-(?<slot2>\\d{2}:\\d{2})");
     private static final DateTimeFormatter parseFormatter =
             DateTimeFormatter.ofPattern(DATETIME_PARSE_PATTERN, Locale.ENGLISH).withZone(ZoneId.systemDefault());
+    private static final Logger logger = LogsCenter.getLogger(Slot.class);
 
     public final String date;
     public final String start;
@@ -60,7 +68,6 @@ public class Slot implements Comparable<Slot> {
         if (!matcher.matches()) {
             throw new IllegalArgumentException(MESSAGE_CONSTRAINTS);
         }
-
         return new Slot(matcher.group("date"), matcher.group("slot1"), matcher.group("slot2"));
     }
 
@@ -80,10 +87,11 @@ public class Slot implements Comparable<Slot> {
             ZonedDateTime t1 = ZonedDateTime.parse(start, parseFormatter);
             ZonedDateTime t2 = ZonedDateTime.parse(end, parseFormatter);
             // the start must be earlier than the end
-            if (t1.compareTo(t2) > 0) {
+            if (t1.compareTo(t2) >= 0) {
                 return false;
             }
         } catch (Exception e) {
+            logger.log(Level.WARNING, test + " is formatted wrongly");
             return false;
         }
         return true;

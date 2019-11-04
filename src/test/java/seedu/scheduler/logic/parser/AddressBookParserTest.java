@@ -19,6 +19,8 @@ import seedu.scheduler.logic.commands.AddCommand;
 import seedu.scheduler.logic.commands.AddIntervieweeCommand;
 import seedu.scheduler.logic.commands.ClearCommand;
 import seedu.scheduler.logic.commands.DeleteCommand;
+import seedu.scheduler.logic.commands.EditCommand;
+import seedu.scheduler.logic.commands.EditIntervieweeCommand;
 import seedu.scheduler.logic.commands.EmailCommand;
 import seedu.scheduler.logic.commands.ExitCommand;
 import seedu.scheduler.logic.commands.FindCommand;
@@ -30,6 +32,8 @@ import seedu.scheduler.model.person.PersonNameHasKeywordsPredicate;
 import seedu.scheduler.model.person.Role;
 import seedu.scheduler.testutil.IntervieweeBuilder;
 import seedu.scheduler.testutil.IntervieweeUtil;
+import seedu.scheduler.testutil.PersonUtil;
+import seedu.scheduler.testutil.TestUtil;
 
 public class AddressBookParserTest {
 
@@ -60,7 +64,6 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_edit() throws Exception {
-        /*
         EditIntervieweeCommand.EditIntervieweeDescriptor descriptor =
                 TestUtil.getDescriptorFromInterviewee(ALICE_INTERVIEWEE);
         EditIntervieweeCommand command =
@@ -69,7 +72,6 @@ public class AddressBookParserTest {
                 + PersonUtil.getEditIntervieweeDescriptorDetails(descriptor));
 
         assertEquals(new EditIntervieweeCommand(ALICE_INTERVIEWEE.getName(), descriptor), command);
-        */
     }
 
     @Test
@@ -103,12 +105,12 @@ public class AddressBookParserTest {
         assertThrows(ParseException.class, String.format(MESSAGE_INVALID_COMMAND_FORMAT, EmailCommand.MESSAGE_USAGE), ()
             -> parser.parseCommand(EmailCommand.COMMAND_WORD));
         assertThrows(ParseException.class, String.format(MESSAGE_INVALID_COMMAND_FORMAT, EmailCommand.MESSAGE_USAGE), ()
-            -> parser.parseCommand(EmailCommand.COMMAND_WORD + " timeslot"));
+            -> parser.parseCommand(EmailCommand.COMMAND_WORD + " ct/timeslot"));
         assertThrows(ParseException.class, String.format(MESSAGE_INVALID_COMMAND_FORMAT, EmailCommand.MESSAGE_USAGE), ()
-            -> parser.parseCommand(EmailCommand.COMMAND_WORD + " invalidcommand"));
+            -> parser.parseCommand(EmailCommand.COMMAND_WORD + " ct/invalidcommand"));
 
         assertTrue(parser.parseCommand(
-                EmailCommand.COMMAND_WORD + " timeslot Alice") instanceof EmailCommand);
+                EmailCommand.COMMAND_WORD + " ct/timeslot n/Alice") instanceof EmailCommand);
     }
 
     @Test
