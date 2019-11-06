@@ -16,6 +16,7 @@ public class DisplayCommand extends Command {
     private static final String SCHEDULE_TAB_COMMAND_WORD = " schedule";
     public static final String CHANGE_TAB_SUCCESS = " displayed.";
 
+
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": command to display "
             + "the schedules in a list of tables, the interviewer's information "
             + "or the interviewer's information in a list.\n"
