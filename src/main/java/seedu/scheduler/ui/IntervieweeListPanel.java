@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+
 import javafx.scene.layout.Region;
 
 import seedu.scheduler.commons.core.LogsCenter;
@@ -23,6 +24,7 @@ public class IntervieweeListPanel extends UiPart<Region> {
 
     @FXML
     private TableView intervieweeTableView;
+
 
     IntervieweeListPanel(ObservableList<Interviewee> intervieweeList) {
         super(FXML);

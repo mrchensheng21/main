@@ -218,7 +218,6 @@ public class MainWindow extends UiPart<Stage> {
     public void changeTab(int index) {
         tabPane.getSelectionModel().select(index);
     }
-
     /**
      * Executes the command and returns the result.
      *

@@ -29,8 +29,8 @@ import javafx.collections.transformation.FilteredList;
 
 import seedu.scheduler.commons.core.GuiSettings;
 import seedu.scheduler.commons.core.LogsCenter;
+import seedu.scheduler.commons.exceptions.ScheduleException;
 import seedu.scheduler.model.person.Department;
-import seedu.scheduler.model.person.InterviewSlot;
 import seedu.scheduler.model.person.Interviewee;
 import seedu.scheduler.model.person.Interviewer;
 import seedu.scheduler.model.person.Name;
@@ -347,11 +347,13 @@ public class ModelManager implements Model {
     }
 
     /**
-     * Generates an empty schedule list from the current interviewer list. Used to generate GUI after user imports data.
+     * Generates an empty schedule list from the current interviewer list. Used to generate GUI after user imports data
+     * and also before the user runs a schedule command.
+     *
      * @return ArrayList of {@Code Schedule}
      * @throws ParseException when timings are not of HH:mm format
      */
-    private ArrayList<Schedule> generateEmptyScheduleList() throws ParseException {
+    public ArrayList<Schedule> generateEmptyScheduleList() throws ParseException {
         ArrayList<Schedule> emptyScheduleList = new ArrayList<>();
         HashSet<String> dates = new HashSet<>();
         String startTime = userPrefs.getStartTime();
@@ -365,7 +367,6 @@ public class ModelManager implements Model {
                 dates.add(date);
             }
         }
-
         ArrayList<String> headers = new ArrayList<>();
         for (Interviewer interviewer: listOfInterviewers) {
             Name name = interviewer.getName();
@@ -373,7 +374,6 @@ public class ModelManager implements Model {
             headers.add(stringifyHeadersForTable(name, department));
         }
         ArrayList<String> datesList = new ArrayList<>(dates);
-
         for (String date: datesList) {
             LinkedList<LinkedList<String>> table = new LinkedList<>();
             LinkedList<String> fullHeader = new LinkedList<>();
@@ -411,7 +411,7 @@ public class ModelManager implements Model {
      * @return String result after addition
      * @throws ParseException when String currentTime is not of HH:mm format
      */
-    private static String addTime(int duration, String currentTime) throws ParseException {
+    public static String addTime(int duration, String currentTime) throws ParseException {
         SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
         Date date = dateFormat.parse(currentTime);
         Calendar cal = Calendar.getInstance();
@@ -428,7 +428,7 @@ public class ModelManager implements Model {
      * @return True if currentTime is greater or equals to endTime
      * @throws ParseException
      */
-    private static boolean isGreaterThanOrEqual(String currentTime, String endTime) throws ParseException {
+    public static boolean isGreaterThanOrEqual(String currentTime, String endTime) throws ParseException {
         SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
         Date currentTimeAsDate = dateFormat.parse(currentTime);
         Date endTimeAsDate = dateFormat.parse(endTime);
@@ -441,7 +441,7 @@ public class ModelManager implements Model {
      * @param department
      * @return Header as String
      */
-    private static String stringifyHeadersForTable(Name name, Department department) {
+    public static String stringifyHeadersForTable(Name name, Department department) {
         return department.toString() + " - " + name.toString();
     }
 
@@ -483,7 +483,7 @@ public class ModelManager implements Model {
     /**
      * Updates schedule list with an empty schedule list.
      */
-    private void updateScheduleList() {
+    public void updateScheduleList() {
         try {
             this.setEmptyScheduleList();
             List<Schedule> schedules = this.getEmptyScheduleList();
@@ -493,34 +493,12 @@ public class ModelManager implements Model {
         }
     }
 
-    @Override
-    public void addInterviewerToSchedule(Interviewer interviewer) {
-        interviewerList.addEntity(interviewer);
-        for (Schedule schedule : schedulesList) {
-            schedule.addInterviewer(interviewer);
-        }
-    }
-
-    /**
-     * Returns the date of the first schedule in which the interviewer exists in, otherwise return empty string.
-     */
-    @Override
-    public String scheduleHasInterviewer(Interviewer interviewer) {
-        String date = "";
-        for (Schedule schedule : schedulesList) {
-            if (schedule.hasInterviewer(interviewer)) {
-                date = schedule.getDate();
-                break;
-            }
-        }
-        return date;
-    }
-
     /**
      * Returns the interview slot allocated to the interviewee with the {@code intervieweeName}.
+     * @return
      */
     @Override
-    public Optional<InterviewSlot> getInterviewSlot(String intervieweeName) {
+    public Optional<Slot> getAllocatedSlot(String intervieweeName) {
         return intervieweeList.getEntity(new Name(intervieweeName)).getAllocatedSlot();
     }
 
@@ -546,7 +524,6 @@ public class ModelManager implements Model {
         return schedulesList;
     }
 
-    /** Returns a list of lists of column titles, each list of column titles belong to a Schedule table*/
     @Override
     public List<List<String>> getTitlesLists() {
         List<List<String>> titlesLists = new LinkedList<>();
@@ -554,6 +531,20 @@ public class ModelManager implements Model {
             titlesLists.add(schedule.getTitles());
         }
         return titlesLists;
+    }
+
+    @Override
+    public void updateSchedulesAfterScheduling() throws ScheduleException {
+        List<Interviewer> interviewers = interviewerList.getEntityList();
+        for (Interviewer interviewer : interviewers) {
+            for (Schedule schedule : schedulesList) {
+                schedule.addAllocatedInterviewees(interviewer, interviewer.getAllocatedSlots());
+            }
+        }
+
+        if (refreshListener != null) {
+            refreshListener.scheduleDataUpdated();
+        }
     }
 
     /**
@@ -566,20 +557,6 @@ public class ModelManager implements Model {
         List<Schedule> listClone = new LinkedList<>();
         for (Schedule schedule : list) {
             listClone.add(Schedule.cloneSchedule(schedule));
-        }
-        return listClone;
-    }
-
-    /**
-     * Returns the deep copy of the interviewee's list given.
-     *
-     * @param list the list of interviewees to be copied.
-     * @return a deep copy of interviewee's list.
-     */
-    private static List<Interviewee> cloneIntervieweesList(List<Interviewee> list) {
-        List<Interviewee> listClone = new LinkedList<>();
-        for (Interviewee interviewee : list) {
-            listClone.add(interviewee);
         }
         return listClone;
     }
@@ -611,8 +588,17 @@ public class ModelManager implements Model {
     // ===========================================================================================================
 
     @Override
-    public void clearAllAllocatedSlot() {
+    public void resetDataBeforeScheduling() {
+        // Clear all allocated slots
         this.intervieweeList.clearAllAllocatedSlots();
+        this.interviewerList.clearAllAllocatedSlots();
+
+        // Clear the interviewees from the schedule
+        for (Schedule schedule : schedulesList) {
+            schedule.clearAllocatedInterviewees();
+        }
+
+        logger.info("Clear all allocated slots");
     }
 
     @Override

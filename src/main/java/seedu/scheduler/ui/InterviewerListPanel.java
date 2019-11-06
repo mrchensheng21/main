@@ -2,7 +2,6 @@ package seedu.scheduler.ui;
 
 import java.util.logging.Logger;
 
-import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
@@ -71,12 +70,13 @@ public class InterviewerListPanel extends UiPart<Region> {
 
     }
 
-    void listUpdated(ObservableList<Interviewer> newInterviewerList) {
+
+    protected void listUpdated(ObservableList<Interviewer> newInterviewerList) {
         clearData();
         this.interviewerTableView.setItems(newInterviewerList);
     }
 
-    void clearData() {
+    protected void clearData() {
         this.interviewerTableView.getItems().removeAll();
     }
 }
