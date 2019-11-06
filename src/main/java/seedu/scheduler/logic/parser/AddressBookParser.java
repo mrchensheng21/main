@@ -6,18 +6,7 @@ import static seedu.scheduler.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import seedu.scheduler.logic.commands.AddCommand;
-import seedu.scheduler.logic.commands.ClearCommand;
-import seedu.scheduler.logic.commands.Command;
-import seedu.scheduler.logic.commands.DeleteCommand;
-import seedu.scheduler.logic.commands.EditCommand;
-import seedu.scheduler.logic.commands.EmailCommand;
-import seedu.scheduler.logic.commands.ExitCommand;
-import seedu.scheduler.logic.commands.FindCommand;
-import seedu.scheduler.logic.commands.HelpCommand;
-import seedu.scheduler.logic.commands.ImportCommand;
-import seedu.scheduler.logic.commands.ListCommand;
-import seedu.scheduler.logic.commands.ScheduleCommand;
+import seedu.scheduler.logic.commands.*;
 import seedu.scheduler.logic.parser.exceptions.ParseException;
 
 /**
@@ -79,6 +68,9 @@ public class AddressBookParser {
 
         case ScheduleCommand.COMMAND_WORD:
             return new ScheduleCommandParser().parse(arguments);
+
+        case DisplayCommand.COMMAND_WORD:
+            return new DisplayCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

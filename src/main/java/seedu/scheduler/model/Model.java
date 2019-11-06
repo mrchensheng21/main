@@ -17,6 +17,7 @@ import seedu.scheduler.model.person.Interviewer;
 import seedu.scheduler.model.person.Name;
 import seedu.scheduler.model.person.exceptions.PersonNotFoundException;
 import seedu.scheduler.ui.RefreshListener;
+import seedu.scheduler.ui.TabListener;
 
 /**
  * The API of the Model component.
@@ -195,6 +196,18 @@ public interface Model {
      * Add a refresh listener to listen to changes of Schedule data.
      */
     void addRefreshListener(RefreshListener listener);
+
+    /**
+     * Add a tabListener to change tab when command is given.
+     */
+    void addTabListener(TabListener tabListener);
+
+    // ================================== Tab Change ============================================
+    void intervieweeTabChange();
+
+    void interviewerTabChange();
+
+    void scheduleTabChange();
 
     // ============================================ Schedule ===================================================
 

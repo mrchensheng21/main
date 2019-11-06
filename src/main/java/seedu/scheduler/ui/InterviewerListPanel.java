@@ -2,10 +2,12 @@ package seedu.scheduler.ui;
 
 import java.util.logging.Logger;
 
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Region;
 
 import seedu.scheduler.commons.core.LogsCenter;
@@ -23,7 +25,7 @@ public class InterviewerListPanel extends UiPart<Region> {
     private ObservableList<Interviewer> interviewerList;
 
     @FXML
-    private TableView<Interviewer> interviewerTableView;
+    private TableView interviewerTableView;
 
     InterviewerListPanel(ObservableList<Interviewer> interviewerList) {
         super(FXML);
@@ -44,14 +46,11 @@ public class InterviewerListPanel extends UiPart<Region> {
      * Set the table columns.
      */
     private void setTableColumn() {
-        createNewTableColumn("Full Name");
-        createNewTableColumn("NUS Email");
-        createNewTableColumn("Personal Email");
-        createNewTableColumn("Mobile");
-        createNewTableColumn("Faculty/School");
-        createNewTableColumn("Acad Year");
-        createNewTableColumn("Choice of Department");
-        createNewTableColumn("Time Slots");
+        createNewTableColumn("Name");
+        createNewTableColumn("Phone");
+        createNewTableColumn("Department");
+        createNewTableColumn("Availabilities");
+        createNewTableColumn("Tags");
     }
 
     /**
@@ -59,19 +58,25 @@ public class InterviewerListPanel extends UiPart<Region> {
      * @param titles The titles for each columns.
      */
     private void createNewTableColumn(String titles) {
-        TableColumn columnTitle = new TableColumn(titles);
+        TableColumn<ObservableList<String>, String> columnTitle =
+                new TableColumn<ObservableList<String>, String>(
+                        titles
+                );
         columnTitle.setReorderable(false);
         columnTitle.setMinWidth(80);
 
+        columnTitle.setCellValueFactory(new PropertyValueFactory<ObservableList<String>,String>(titles));
+
         interviewerTableView.getColumns().add(columnTitle);
+
     }
 
-    protected void listUpdated(ObservableList<Interviewer> newInterviewerList) {
+    void listUpdated(ObservableList<Interviewer> newInterviewerList) {
         clearData();
         this.interviewerTableView.setItems(newInterviewerList);
     }
 
-    protected void clearData() {
+    void clearData() {
         this.interviewerTableView.getItems().removeAll();
     }
 }

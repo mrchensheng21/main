@@ -215,6 +215,10 @@ public class MainWindow extends UiPart<Stage> {
         interviewerListPanel.listUpdated(newInterviewerList);
     }
 
+    public void changeTab(int index) {
+        tabPane.getSelectionModel().select(index);
+    }
+
     /**
      * Executes the command and returns the result.
      *
