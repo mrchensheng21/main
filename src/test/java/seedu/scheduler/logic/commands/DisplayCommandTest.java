@@ -11,9 +11,9 @@ import seedu.scheduler.model.ModelManager;
  * Contains integration tests (interaction with Model)
  */
 public class DisplayCommandTest {
-    private static final String INTERVIEWEE = " interviewee";
-    private static final String INTERVIEWER = " interviewer";
-    private static final String SCHEDULE = " schedule";
+    private static final String INTERVIEWEE = "interviewee";
+    private static final String INTERVIEWER = "interviewer";
+    private static final String SCHEDULE = "schedule";
 
     private Model model = new ModelManager();
 
@@ -22,7 +22,7 @@ public class DisplayCommandTest {
     public void displayIntervieweeTab_success() {
         DisplayCommand displayCommand = new DisplayCommand(INTERVIEWEE);
         CommandResult expectedCommandResult = new CommandResult(
-                DisplayCommand.CHANGE_TAB_SUCCESS, false, false);
+                INTERVIEWEE + DisplayCommand.CHANGE_TAB_SUCCESS, false, false);
         Model expectedModel = new ModelManager();
         assertCommandSuccess(displayCommand, model, expectedCommandResult, expectedModel);
     }
@@ -32,7 +32,7 @@ public class DisplayCommandTest {
     public void displayInterviewerTab_success() {
         DisplayCommand displayCommand = new DisplayCommand(INTERVIEWER);
         CommandResult expectedCommandResult = new CommandResult(
-                DisplayCommand.CHANGE_TAB_SUCCESS, false, false);
+                INTERVIEWER + DisplayCommand.CHANGE_TAB_SUCCESS, false, false);
         Model expectedModel = new ModelManager();
         assertCommandSuccess(displayCommand, model, expectedCommandResult, expectedModel);
     }
@@ -42,7 +42,7 @@ public class DisplayCommandTest {
     public void displayScheduleTab_success() {
         DisplayCommand displayCommand = new DisplayCommand(SCHEDULE);
         CommandResult expectedCommandResult = new CommandResult(
-                DisplayCommand.CHANGE_TAB_SUCCESS, false, false);
+                SCHEDULE + DisplayCommand.CHANGE_TAB_SUCCESS, false, false);
         Model expectedModel = new ModelManager();
         assertCommandSuccess(displayCommand, model, expectedCommandResult, expectedModel);
     }

@@ -38,7 +38,11 @@ public class IntervieweeListPanel extends UiPart<Region> {
     private void initialise() {
         setTableColumn();
         this.intervieweeTableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
-        this.intervieweeTableView.setItems(this.intervieweeList);
+        if (this.intervieweeList.isEmpty()) {
+            this.intervieweeTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        } else {
+            this.intervieweeTableView.setItems(this.intervieweeList);
+        }
     }
 
     /**
