@@ -1,13 +1,22 @@
 package seedu.scheduler.ui;
 
+/**
+ * API of TabListener.
+ */
 public interface TabListener {
 
     /**
-     * Signal to the main window to change tabs
+     * Signal main window to change to schedule tab.
      */
     void changeTabSchedule();
 
+    /**
+     * Signal main window to change to interviewee tab.
+     */
     void changeTabInterviewee();
 
+    /**
+     * Signal main window to change to interviewer tab.
+     */
     void changeTabInterviewer();
 }

@@ -64,7 +64,7 @@ public class InterviewerListPanel extends UiPart<Region> {
         columnTitle.setReorderable(false);
         columnTitle.setMinWidth(80);
 
-        columnTitle.setCellValueFactory(new PropertyValueFactory<ObservableList<String>,String>(titles));
+        columnTitle.setCellValueFactory(new PropertyValueFactory<ObservableList<String>, String>(titles));
 
         interviewerTableView.getColumns().add(columnTitle);
 

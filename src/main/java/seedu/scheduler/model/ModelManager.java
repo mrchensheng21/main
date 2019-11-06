@@ -461,21 +461,21 @@ public class ModelManager implements Model {
 
     @Override
     public void intervieweeTabChange() {
-        if(tabListener != null) {
+        if (tabListener != null) {
             tabListener.changeTabInterviewee();
         }
     }
 
     @Override
     public void interviewerTabChange() {
-        if(tabListener != null) {
+        if (tabListener != null) {
             tabListener.changeTabInterviewer();
         }
     }
 
     @Override
     public void scheduleTabChange() {
-        if(tabListener != null) {
+        if (tabListener != null) {
             tabListener.changeTabSchedule();
         }
     }
