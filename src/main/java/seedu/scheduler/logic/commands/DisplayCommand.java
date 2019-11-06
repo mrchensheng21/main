@@ -19,7 +19,7 @@ public class DisplayCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": command to display "
             + "the schedules in a list of tables, the interviewer's information "
             + "or the interviewer's information in a list.\n"
-            + "Example: " + COMMAND_WORD + " " + SCHEDULE_TAB_COMMAND_WORD;
+            + "Example: " + COMMAND_WORD + SCHEDULE_TAB_COMMAND_WORD;
 
     private final String commandType;
 
