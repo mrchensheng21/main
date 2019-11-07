@@ -1,6 +1,7 @@
 package seedu.scheduler.logic.commands;
 
 import static seedu.scheduler.logic.commands.CommandTestUtil.assertCommandFailure;
+
 import static seedu.scheduler.logic.commands.CommandTestUtil.assertCommandSuccess;
 
 import org.junit.jupiter.api.Test;
