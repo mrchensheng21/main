@@ -1,9 +1,11 @@
 package seedu.scheduler.logic.commands;
 
+import static seedu.scheduler.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.scheduler.logic.commands.CommandTestUtil.assertCommandSuccess;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.scheduler.commons.core.Messages;
 import seedu.scheduler.model.Model;
 import seedu.scheduler.model.ModelManager;
 
@@ -27,6 +29,14 @@ public class DisplayCommandTest {
         assertCommandSuccess(displayCommand, model, expectedCommandResult, expectedModel);
     }
 
+    @Test
+    public void execute_displayIntervieweeCommandInvalid_throwsCommandException() {
+        DisplayCommand displayCommand = new DisplayCommand("invalidCommand");
+        Model expectedModel = new ModelManager();
+        assertCommandFailure(displayCommand, expectedModel, String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT,
+                DisplayCommand.MESSAGE_USAGE));
+    }
+
     // ===================================== Interviewer ==============================================
     @Test
     public void displayInterviewerTab_success() {
@@ -47,4 +57,3 @@ public class DisplayCommandTest {
         assertCommandSuccess(displayCommand, model, expectedCommandResult, expectedModel);
     }
 }
-
