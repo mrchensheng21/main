@@ -79,13 +79,18 @@ public class IntervieweeListPanel extends UiPart<Region> {
         timeSlotTitle.setCellValueFactory(
                 new PropertyValueFactory<ObservableList<String>, String>("AvailableTimeslots"));
         editTableColumn(timeSlotTitle);
+        TableColumn<ObservableList<String>, String> allocatedTimeTitle =
+                new TableColumn<ObservableList<String>, String>("Allocated Slot");
+        allocatedTimeTitle.setCellValueFactory(
+                new PropertyValueFactory<ObservableList<String>, String>("allocatedSlot"));
+        editTableColumn(allocatedTimeTitle);
         TableColumn<ObservableList<String>, String> tagTitle =
                 new TableColumn<ObservableList<String>, String>("Tags");
         tagTitle.setCellValueFactory(new PropertyValueFactory<ObservableList<String>, String>("Tags"));
         editTableColumn(tagTitle);
 
         intervieweeTableView.getColumns().addAll(nameTitle, emailTitle, facultyTitle, yearTitle,
-                departmentTitle, timeSlotTitle, tagTitle);
+                departmentTitle, timeSlotTitle, allocatedTimeTitle, tagTitle);
     }
 
     /**
