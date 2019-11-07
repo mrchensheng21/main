@@ -6,6 +6,7 @@ import static seedu.scheduler.logic.commands.CommandTestUtil.assertCommandSucces
 import org.junit.jupiter.api.Test;
 
 import seedu.scheduler.commons.core.Messages;
+
 import seedu.scheduler.model.Model;
 import seedu.scheduler.model.ModelManager;
 
@@ -57,3 +58,4 @@ public class DisplayCommandTest {
         assertCommandSuccess(displayCommand, model, expectedCommandResult, expectedModel);
     }
 }
+
