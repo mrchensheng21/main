@@ -578,6 +578,27 @@ Use case ends.
 +
 Use case ends.
 
+=== Use case: (UC-5) Display list of interviewee
+
+*MSS*
+
+1. User request to change display to interviewee.
+2. Scheduler change to display the list of interviewees.
++
+Use case ends.
+
+*Extensions*
+* 1a. User does a typo while entering the command.
+* 1a1. Scheduler display invalid command to the user.
++
+Use case resumes at step 1.
+
+* 1b. User left the command blank after typing `display`.
+* 1b1. Scheduler display invalid command to user.
++
+Use case resumes at step 1.
+
+
 [appendix]
 == Non Functional Requirements
 
