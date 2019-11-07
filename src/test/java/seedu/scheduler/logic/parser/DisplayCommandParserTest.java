@@ -4,6 +4,7 @@ import static seedu.scheduler.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORM
 import static seedu.scheduler.logic.parser.CommandParserTestUtil.assertParseFailure;
 
 import org.junit.jupiter.api.Test;
+
 import seedu.scheduler.logic.commands.DisplayCommand;
 
 

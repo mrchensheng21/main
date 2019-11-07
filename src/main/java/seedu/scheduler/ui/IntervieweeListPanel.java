@@ -101,13 +101,4 @@ public class IntervieweeListPanel extends UiPart<Region> {
         tableColumn.setReorderable(false);
         tableColumn.setMinWidth(80);
     }
-
-    protected void listUpdated(ObservableList<Interviewee> newIntervieweeList) {
-        clearData();
-        this.intervieweeTableView.setItems(newIntervieweeList);
-    }
-
-    protected void clearData() {
-        this.intervieweeTableView.getItems().removeAll();
-    }
 }

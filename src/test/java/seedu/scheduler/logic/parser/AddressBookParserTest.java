@@ -17,7 +17,20 @@ import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.scheduler.logic.commands.*;
+import seedu.scheduler.logic.commands.AddCommand;
+import seedu.scheduler.logic.commands.AddIntervieweeCommand;
+import seedu.scheduler.logic.commands.ClearCommand;
+import seedu.scheduler.logic.commands.DeleteCommand;
+import seedu.scheduler.logic.commands.DisplayCommand;
+import seedu.scheduler.logic.commands.EditCommand;
+import seedu.scheduler.logic.commands.EditIntervieweeCommand;
+import seedu.scheduler.logic.commands.EmailCommand;
+import seedu.scheduler.logic.commands.ExitCommand;
+import seedu.scheduler.logic.commands.ExportCommand;
+import seedu.scheduler.logic.commands.FindCommand;
+import seedu.scheduler.logic.commands.HelpCommand;
+import seedu.scheduler.logic.commands.ImportCommand;
+import seedu.scheduler.logic.commands.ListCommand;
 import seedu.scheduler.logic.parser.exceptions.ParseException;
 import seedu.scheduler.model.person.Interviewee;
 import seedu.scheduler.model.person.PersonNameHasKeywordsPredicate;
@@ -94,8 +107,9 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_email() throws Exception {
-        assertThrows(ParseException.class, String.format(MESSAGE_INVALID_COMMAND_FORMAT, EmailCommand.MESSAGE_USAGE), ()
-            -> parser.parseCommand(EmailCommand.COMMAND_WORD));
+        assertThrows(ParseException.class, String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                EmailCommand.MESSAGE_USAGE), ()
+                -> parser.parseCommand(EmailCommand.COMMAND_WORD));
         assertThrows(ParseException.class, String.format(MESSAGE_INVALID_COMMAND_FORMAT, EmailCommand.MESSAGE_USAGE), ()
             -> parser.parseCommand(EmailCommand.COMMAND_WORD + " ct/timeslot"));
         assertThrows(ParseException.class, String.format(MESSAGE_INVALID_COMMAND_FORMAT, EmailCommand.MESSAGE_USAGE), ()
@@ -107,7 +121,8 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_display() throws Exception {
-        assertThrows(ParseException.class, String.format(MESSAGE_INVALID_COMMAND_FORMAT, DisplayCommand.MESSAGE_USAGE), ()
+        assertThrows(ParseException.class, String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                DisplayCommand.MESSAGE_USAGE), ()
                 -> parser.parseCommand(DisplayCommand.COMMAND_WORD));
 
         assertTrue(parser.parseCommand(

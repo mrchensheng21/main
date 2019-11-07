@@ -8,7 +8,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.Region;
-import seedu.scheduler.model.Schedule;
 
 /**
  * Table consisting of timetables of scheduling.

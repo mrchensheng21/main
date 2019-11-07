@@ -21,5 +21,6 @@ else if () then ([arguments matches "schedule"])
 else ([else])
 :throw invalid command exception;
 endif
+stop
 
 @end uml

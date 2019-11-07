@@ -55,17 +55,6 @@ public class UiManager implements Ui, TabListener, RefreshListener {
         mainWindow.scheduleDataUpdated(logic.getTitlesLists(), logic.getObservableLists());
     }
 
-    /**
-     * Signals the main window that list of interviewee is updated.
-     */
-    public void intervieweeListUpdated() {
-        mainWindow.intervieweeListUpdated(logic.getFilteredIntervieweeList());
-    }
-
-    public void interviewerListUpdated() {
-        mainWindow.interviewerListUpdated(logic.getFilteredInterviewerList());
-    }
-
     public void changeTabSchedule() {
         mainWindow.changeTab(0);
     }
