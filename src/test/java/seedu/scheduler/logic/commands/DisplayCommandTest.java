@@ -1,5 +1,6 @@
 package seedu.scheduler.logic.commands;
 
+
 import static seedu.scheduler.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.scheduler.logic.commands.CommandTestUtil.assertCommandSuccess;
 
@@ -57,3 +58,4 @@ public class DisplayCommandTest {
         assertCommandSuccess(displayCommand, model, expectedCommandResult, expectedModel);
     }
 }
+
