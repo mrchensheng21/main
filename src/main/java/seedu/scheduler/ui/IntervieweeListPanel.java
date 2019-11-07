@@ -89,7 +89,7 @@ public class IntervieweeListPanel extends UiPart<Region> {
         tagTitle.setCellValueFactory(new PropertyValueFactory<ObservableList<String>, String>("Tags"));
         editTableColumn(tagTitle);
 
-        intervieweeTableView.getColumns().addAll(nameTitle, emailTitle, facultyTitle, yearTitle,
+        intervieweeTableView.getColumns().addAll(nameTitle, phoneTitle, emailTitle, facultyTitle, yearTitle,
                 departmentTitle, timeSlotTitle, allocatedTimeTitle, tagTitle);
     }
 
