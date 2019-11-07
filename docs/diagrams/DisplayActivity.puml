@@ -22,5 +22,4 @@ else ([else])
 :throw invalid command exception;
 endif
 stop
-
 @end uml
