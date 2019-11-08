@@ -99,6 +99,7 @@ public class IntervieweeListPanel extends UiPart<Region> {
      */
     private void editTableColumn(TableColumn tableColumn) {
         tableColumn.setReorderable(false);
+        tableColumn.setSortable(false);
         tableColumn.setMinWidth(80);
     }
 }

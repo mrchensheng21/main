@@ -31,6 +31,7 @@
 .table-view .table-cell {
     -fx-font-weight:bold;
     -fx-font-size:15px;
+
 }
 
 //Style of each entire row in the table view when is hovered
