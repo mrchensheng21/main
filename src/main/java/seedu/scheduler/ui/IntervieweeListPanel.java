@@ -37,12 +37,12 @@ public class IntervieweeListPanel extends UiPart<Region> {
      */
     private void initialise() {
         setTableColumn();
-        this.intervieweeTableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
         if (this.intervieweeList.isEmpty()) {
             this.intervieweeTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         } else {
-            this.intervieweeTableView.setItems(this.intervieweeList);
+            this.intervieweeTableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
         }
+        this.intervieweeTableView.setItems(this.intervieweeList);
     }
 
     /**
@@ -55,7 +55,7 @@ public class IntervieweeListPanel extends UiPart<Region> {
         editTableColumn(nameTitle);
         TableColumn<ObservableList<String>, String> phoneTitle =
                 new TableColumn<ObservableList<String>, String>("Phone");
-        phoneTitle.setCellValueFactory(new PropertyValueFactory<ObservableList<String>, String>("phoneTitle"));
+        phoneTitle.setCellValueFactory(new PropertyValueFactory<ObservableList<String>, String>("phone"));
         editTableColumn(phoneTitle);
         TableColumn<ObservableList<String>, String> emailTitle =
                 new TableColumn<ObservableList<String>, String>("Emails");
