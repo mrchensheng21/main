@@ -160,6 +160,8 @@ of interviewees
 
 image::ImportUIRefreshSequenceDiagram.png[]
 
+// tag::logic[]
+
 [[Design-Logic]]
 === Logic component
 
@@ -183,6 +185,8 @@ Given below is the Sequence Diagram for interactions within the `Logic` componen
 
 .Interactions Inside the Logic Component for the `delete 1` Command
 image::DeleteSequenceDiagram.png[]
+
+// end::logic[]
 
 NOTE: The lifeline for `DeleteCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
 
@@ -229,6 +233,8 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 == Implementation
 This section describes some noteworthy details on how certain features are implemented.
 
+// tag::add[]
+
 === Add Interviewee/Interviewer feature
 The add command is facilitated by the `AddCommandParser` class. It extends `AddCommandParser` by allowing it to parse
 prefixes specific to our Scheduler app, namely:
@@ -253,6 +259,8 @@ image::AddSequenceDiagram_1_2.png[]
 The following activity diagram shows the steps needed to add a new interviewee:
 
 image::AddActivityDiagram_1_2.png[]
+
+// end::add[]
 
 === [Coming soon in v1.3] Scheduling Algorithm
 The scheduling of interviews is essentially a https://www.geeksforgeeks.org/maximum-bipartite-matching/[maximum bipartite matching problem].
@@ -303,15 +311,15 @@ As seen in the above sequence diagram, the execution of the import feature consi
 * Step 1: `LogicManager` will start executing the command by parsing it over to `AddressBookParser`.
 * Step 2: `AddressBookParser` will then look and initialise an `ImportCommand` instance and return it to `LogicManager`.
 * Step 3: `LogicManager` will then call execute() on the returned `ImportCommand`  object.
-* Step 4: During the execute() method, the method will initialise a `CsvReader` object to `read()` data from the the given .csv file.
-* Step 5: The read data will then be stored as either `scheduleList` or `intervieweeList` in the model.
+* Step 4: During the execute() method, the method will initialise a `CsvReader` object to `readInterviewers()` from the the given .csv file.
+* Step 5: Each `Interviewer` object returned from Step 4 will then be added into model's `interviewerList`.
 
 The following activity diagram summarizes what happens when a user executes a new command:
 
 image::ImportActivityDiagram.png[]
 
 
-=== [Coming soon in v1.4] Export
+=== Export
 ==== Implementation [Proposed]
 The Export command gets the scheduled time slots from the Model and writes them in the specified .csv file.
 CsvWriter facilitates the writing to the specified file.
@@ -329,7 +337,7 @@ The Activity Diagram below summarises the execution of the export command.
 
 image::ExportActivityDiagram.png[]
 
-
+// tag::email[]
 === [Coming soon in v1.4] Email
 ==== Implementation
 
@@ -356,6 +364,7 @@ Additional details that can be configured by the user (as user preferences) incl
 
 The message content can also be configured by the user. However, a default template will be used when no such configuration file exists or is provided.
 
+// end::email[]
 
 === Display
 ==== Implementation
