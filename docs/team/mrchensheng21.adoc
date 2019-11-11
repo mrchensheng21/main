@@ -32,7 +32,8 @@ and in the end decided on converting the table into a list cell view.
 * *Other contributions*:
 
 ** Project management:
-*** Help in making sure that the code is following the checkstyle.
+*** Help in checking code quality of the team.
+*** Help to check the flow and readability of the UserGuide.
 ** Enhancements to existing features:
 *** Update GUI style https://github.com/AY1920S1-CS2103-F09-1/main/pull/175[#175]
 *** Creating tabs for the UI to display the different views. https://github.com/AY1920S1-CS2103-F09-1/main/pull/160[#160]
