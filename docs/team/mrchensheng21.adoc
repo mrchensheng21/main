@@ -44,12 +44,14 @@ and in the end decided on converting the table into a list cell view.
 *** Update GUI style https://github.com/AY1920S1-CS2103-F09-1/main/pull/157[#157] https://github.com/AY1920S1-CS2103-F09-1/main/pull/175[#175]
 
 ** Enhancements to existing features:
-*** Update GUI style https://github.com/AY1920S1-CS2103-F09-1/main/pull/175[#175]
+*** Update GUI style to ensure that the viewing of schedule table is clear. Different colors are used to differentiate
+the cells whether the interviewer is available, unavailable or has been allocated to a slot with an interviewee.
+https://github.com/AY1920S1-CS2103-F09-1/main/pull/175[#175]
 *** Creating tabs for the UI to display the different views. https://github.com/AY1920S1-CS2103-F09-1/main/pull/160[#160]
 *** Added UseCases for the Developer Guide https://github.com/AY1920S1-CS2103-F09-1/main/pull/175[#175]
 
 ** Tools:
-*** Used multiple css files to enhance the UI display. https://github.com/AY1920S1-CS2103-F09-1/main/pull/157[#157]
+*** Used multiple css files to enhance the UI display for the table views and to beautify the tabs https://github.com/AY1920S1-CS2103-F09-1/main/pull/157[#157]
 
 == Contributions to the User Guide
 |===
