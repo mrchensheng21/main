@@ -262,8 +262,6 @@ WARNING: Data erased cannot be undone!
 
 //end::clear[]
 
-====
-
 === Scheduling `schedule`
 ==== Schedule the interviews
 Schedule and allocate interviewees to the available interview slots based on the availability of interviewees and
