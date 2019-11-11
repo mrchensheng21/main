@@ -26,11 +26,7 @@ and in the end decided on converting the table into a list cell view.
 
 * *Minor enhancement*: Created a display command feature which allows the user to switch display using CLI command.
 
-* *Code contributed*: [https://nus-cs2103-ay1920s1.github.io/
-tp-dashboard/#search=mrchensheng21&sort=groupTitle&sortWithin=title&
-since=2019-09-06&timeframe=commit&mergegroup=false&group
-Select=groupByRepos&breakdown=false&tabOpen=true&tabType=authorship&tabAuthor=
-mrchensheng21&tabRepo=AY1920S1-CS2103-F09-1%2Fmain%5Bmaster%5D[Functional code]]
+* *Code contributed*: [https://nus-cs2103-ay1920s1.github.io/tp-dashboard/#search=mrchensheng21&sort=groupTitle&sortWithin=title&since=2019-09-06&timeframe=commit&mergegroup=false&groupSelect=groupByRepos&breakdown=false&tabOpen=true&tabType=authorship&tabAuthor=mrchensheng21&tabRepo=AY1920S1-CS2103-F09-1%2Fmain%5Bmaster%5D[Functional code]]
 
 [https://nus-cs2103-ay1920s1.github.io/tp-dashboard/
 #search=mrchensheng21&sort=groupTitle&sortWithin=title&since=
