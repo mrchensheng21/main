@@ -72,7 +72,7 @@ image::ArchitectureSequenceDiagram.png[]
 
 The sections below give more details of each component.
 
-// tag::UiDesign[]
+tag::UiDesign[]
 [[Design-Ui]]
 === UI component
 
@@ -166,7 +166,7 @@ of interviewees
 .UI Refresh During Data Import Sequence Diagram
 image::ImportUIRefreshSequenceDiagram.png[]
 
-// end::UiDesign[]
+end::UiDesign[]
 
 // tag::logic[]
 
