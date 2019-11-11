@@ -607,31 +607,6 @@ Constraints:
 ==== Display Interviewee
 Display information of the interviewees in a table format.
 
-<<<<<<< HEAD
-// tag::UiDisplay[]
-
-=== UI Display `display`
-
-==== Display Schedules
-Display multiple tables that consist information of the schedules generated in a day format. The columns will show the date of the schedule followed by
-the interviewers and their respective departments. The rows consists of the time slots as well as names of the interviewee.
-
-Format: `display schedule`
-
-Notes:
-* You are also able to toggle to display schedule by clicking on the Schedules tab.
-
-====
-
-Constraints:
-
-* The command must be exactly the same as the format.
-
-====
-
-==== Display Interviewee
-Display information of the interviewees in a table format.
-
 Format: `display interviewee`
 
 Notes:
@@ -639,15 +614,6 @@ Notes:
 
 ====
 
-=======
-Format: `display interviewee`
-
-Notes:
-* You are also able to toggle to display schedule by clicking on the Interviewee tab.
-
-====
-
->>>>>>> AY1920S1-CS2103-F09-1-master
 Constraints:
 
 * The command must be exactly the same as the format.
