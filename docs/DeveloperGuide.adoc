@@ -603,6 +603,9 @@ The activity diagram will provide the overall flow of this implementation.
 
 image::DisplayActivity.png
 
+NOTE: For the activity diagram, plantUML is not able to have multiple alternate paths from a diamond. Thus, multiple diamonds are used to implement
+multiple alternate paths.
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
@@ -932,6 +935,21 @@ This section follows directly from the previous section, <<Editing an entity, Ed
 .. `delete Delilah r/interviewer`
 . Expected: The Interviewers tab now similar reflects the deleted interviewer `Delilah`.
 . You can delete any entity as long as the entity's name is shown in the Interviewee/Interviewer tab. See the User Guide under the `delete` command section for specifics.
+
+=== Displaying different views from the Scheduler
+Please refer to the UI Display section in the <<UserGuide#, user guide>> for more detailed information on the `display` command.
+
+. Type `display interviewee` to display a list of interviewee in the scheduler.
+. Expected: A table will be shown with the list of interviewees arranged in this format:
+
+image::intervieweeListFormat.png[]
+
+. Table will be filled when a list of interviewee is imported into the Scheduler.
+. You can also display the list of interviewers and the scheduled table by the command `display interviewer` and `display schedule` respectively.
+. The format for both the display is shown below.
+
+image::interviewerListFormat.png[]
+image::scheduleListFormat.png[]
 
 === Scheduling Interviews
 . Import .csv files of interviewers' availability and interviewees' details using the `import` command.
