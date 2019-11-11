@@ -81,7 +81,7 @@ public class ModelManager implements Model {
 
         this.userPrefs = new UserPrefs(userPrefs);
         this.appStatus = AppStatus.getInstance();
-        this.updateScheduleList();
+        this.resetSchedulesList();
     }
 
     public ModelManager() {
@@ -139,6 +139,7 @@ public class ModelManager implements Model {
     @Override
     public void addInterviewee(Interviewee interviewee) {
         intervieweeList.addEntity(interviewee);
+        this.resetScheduledResult();
     }
 
     @Override
@@ -174,7 +175,7 @@ public class ModelManager implements Model {
     @Override
     public void addInterviewer(Interviewer interviewer) {
         interviewerList.addEntity(interviewer);
-        this.updateScheduleList();
+        this.resetScheduledResult();
     }
 
     /**
@@ -248,24 +249,25 @@ public class ModelManager implements Model {
     @Override
     public void deleteInterviewee(Interviewee target) throws PersonNotFoundException {
         intervieweeList.removeEntity(target);
-        this.updateScheduleList();
+        this.resetScheduledResult();
     }
 
     @Override
     public void deleteInterviewer(Interviewer target) throws PersonNotFoundException {
         interviewerList.removeEntity(target);
-        this.updateScheduleList();
+        this.resetScheduledResult();
     }
 
     @Override
     public void setInterviewee(Interviewee target, Interviewee editedTarget) throws PersonNotFoundException {
         intervieweeList.setEntity(target, editedTarget);
+        this.resetScheduledResult();
     }
 
     @Override
     public void setInterviewer(Interviewer target, Interviewer editedTarget) throws PersonNotFoundException {
         interviewerList.setEntity(target, editedTarget);
-        this.updateScheduleList();
+        this.resetScheduledResult();
     }
 
 
@@ -475,6 +477,7 @@ public class ModelManager implements Model {
     }
 
     /**
+<<<<<<< HEAD
      * Updates schedule list based on interviewer's data.
      */
     public void updateScheduleList() {
@@ -488,6 +491,8 @@ public class ModelManager implements Model {
     }
 
     /**
+=======
+>>>>>>> e8736951f8be4c8d5b473d69aaa780c957765568
      * Returns the interview slot allocated to the interviewee with the {@code intervieweeName}.
      * @return
      */
@@ -528,6 +533,30 @@ public class ModelManager implements Model {
             titlesLists.add(schedule.getTitles());
         }
         return titlesLists;
+    }
+
+    @Override
+    public void resetScheduledResult() {
+        // Clear all allocated slots
+        this.intervieweeList.clearAllAllocatedSlots();
+        this.interviewerList.clearAllAllocatedSlots();
+
+        // Clear the interviewees from the schedule
+        this.resetSchedulesList();
+    }
+
+    /**
+     * Resets the schedules in the schedule list to empty schedule, i.e. the schedule only reflects the interviewers'
+     * availability and the scheduled result is cleared.
+     */
+    private void resetSchedulesList() {
+        try {
+            this.setEmptyScheduleList();
+            List<Schedule> schedules = this.getEmptyScheduleList();
+            this.setSchedulesList(schedules);
+        } catch (ParseException e) {
+            logger.log(Level.WARNING, "Should not have exceptions");
+        }
     }
 
     @Override
@@ -585,19 +614,6 @@ public class ModelManager implements Model {
     }
 
     // ===========================================================================================================
-
-    @Override
-    public void resetDataBeforeScheduling() {
-        // Clear all allocated slots
-        this.intervieweeList.clearAllAllocatedSlots();
-        this.interviewerList.clearAllAllocatedSlots();
-
-        // Clear the interviewees from the schedule
-        for (Schedule schedule : schedulesList) {
-            schedule.clearAllocatedInterviewees();
-        }
-    }
-
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object

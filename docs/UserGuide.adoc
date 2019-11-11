@@ -14,7 +14,7 @@ ifdef::env-github[]
 :note-caption: :information_source:
 :warning-caption: :warning_sign:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level3
+:repoURL: https://github.com/AY1920S1-CS2103-F09-1/main
 
 By: `Team AY1920S1-CS2103-F09-1`      Since: `Oct 2019`      Licence: `MIT`
 
@@ -28,20 +28,34 @@ typing in a Command Line Interface (CLI)** to quickly access the functionalities
 Click on <<Quick Start, Quick Start>> to get started!
 
 == Quick Start
-This guide shows you how to import your interviewee and interviewer schedules into Scheduler to begin managing your interview schedule.
+This guide shows you how to import your interviewees details and interviewers availability into Scheduler to begin managing your interview schedule.
 It also shows you basic tips on how to add or delete and edit interviewers/interviewees based on your changing needs.
 
 === Import your csv file into the application
-To begin, let's download some comma-separated value (.csv) files with dummy data and import that data into Scheduler.
+To begin, let's download sample interviewers availability and interviewees details in comma-separated value (.csv) files and import the data into Scheduler.
 
-Click <<Importing existing availabilities `import`, this link>> to download and import a .csv file of availabilities into Scheduler!
+Sample/Template of Interviewer's Availability and Interviewee Details
+
+* Interviewers' availability: http://bit.ly/interviewerTemplate
+* Interviewees' details: http://bit.ly/intervieweeDetails
+
+Type `import interviewer fp/FILE_PATH` to import interviewers availability. To import interviewees details, type
+`import interviewee fp/FILE_PATH` . `FILE_PATH` is the full/absolute file path to where the interviewers availability or
+interviewees details .csv file is located.
+
+When you have imported interviewers' availability, you will see that the interviewer's availability are displayed as tables in
+the Schedules tab. In the tables, there will be cells with 1 and 0s. 1 means that the interviewer of that column is available for interview at that particular
+time slot (at the leftmost column on the same row where the 1 is located), otherwise is 0. The imported interviewers details will also be displayed
+in the `Interviewers` tab.
 
 // tag::quickstart_add[]
 
 === Manually add interviewees and interviewers
 Forgot to include some data before importing? No problem!
 
-To add an interviewee, use the `add` command. Here we add an interviewee with the following characteristics:
+To add an interviewee, use the `add` command. The interviewee will then be displayed in the Interviewees tab.
+
+Here we add an interviewee with the following characteristics:
 
 . *Name* - John Doe
 . *Phone number* - 91234567
@@ -52,7 +66,7 @@ To add an interviewee, use the `add` command. Here we add an interviewee with th
 . *Work email* (should be an NUS email) - john_doe@u.nus.edu
 . *Preferred time slots* - 17/10/2019, 1pm to 2pm
 
- add r/interviewee n/John Doe p/91234567 f/School of Computing y/2019 ep/john_doe@gmail.com ew/john_doe@u.nus.edu d/Marketing s/17/10/2019 13:00-14:00
+ add interviewee n/John Doe p/91234567 f/School of Computing y/1 ep/john_doe@gmail.com ew/john_doe@u.nus.edu d/Marketing s/17/10/2019 13:00-14:00
 
 * Note that all fields specified above are *compulsory* when adding an interviewee manually.
 * Please also note that the added interviewee cannot be already present in the application data, ie. no duplicates are allowed.
@@ -65,38 +79,33 @@ Similarly, to add an interviewer with the characteristics:
 . *Department* - Marketing
 . *Available time slots* - 17/10/2019, 1pm to 2pm
 
- add r/interviewer n/Bohn Coe p/97654321 ew/bohn_coe@u.nus.edu d/Marketing s/17/10/2019 13:00-14:00
+ add interviewer n/Bohn Coe p/97654321 ew/bohn_coe@u.nus.edu d/Marketing s/17/10/2019 13:00-14:00
 
 * Again, the fields specified above are *compulsory when adding an interviewer manually.
 * Please also note that the added interviewer cannot be already present in the application data, ie. no duplicates are allowed.
 
-=== TIP: Converting an Excel file in .csv format
-
-1) Open Excel and click *File -> Open*.
-
-image::quickstart/1_excel.png[width="500", align="left"]
-
-2) In the dialog box, find the Excel file on your computer and click *Open*.
-
-image::quickstart/2_excel.png[width="500", align="left"]
-
-3) On the Excel toolbar, select *File > Save As*.
-
-image::quickstart/3_excel.png[width="500", align="left"]
-
-4) In the dialog box, type a new name for your file in the *File Name* field.
-
-5) In the "Save as Type" drop-down menu, scroll down to locate and select *CSV (comma delimited)*.
-
-image::quickstart/4_excel.png[width="500", align="left"]
-
-6) Click *Save*.
-
-image::quickstart/5_excel.png[width="500", align="left"]
-
-NOTE: Solution and images referenced from https://knowledgebase.constantcontact.com
+The added interviewer will be displayed in the Interviewers tab.
 
 // end::quickstart_add[]
+
+=== Schedule interviews
+Type `schedule` in the command line of the application. Scheduler will then schedule the interviews for you and the result
+will be displayed in the Schedules tab! If an interviewee is allocated a time slot, the name of the interviewee will be displayed
+in one of the tables in the `Schedule tab` depending on which slot is allocated to him/her.
+
+At the cell which displays the interviewee's name, the time slot allocated to it is on the leftmost column of the same row, and the interviewer that will be interviewing
+him/her is the name displayed beside the department in the first row of the same column.
+
+=== Email
+Want to email the allocated time slot to an interviewee? Simply type `email ct/timeslot n/INTERVIEWEE NAME`, replacing
+`INTERVIEWEE NAME` with the name of the interviewee.
+
+=== Export
+Now let's export the scheduled result to an external .csv file! Simply type `export fp/FILE_PATH`, replacing `FILE_PATH` with the full/absolute
+path to your target destination of the .csv file. If the .csv file has not exist, Scheduler will create the exported result file
+at the target destination you specify in `file path`!
+
+That's all for the quick start and hope you enjoy using Scheduler!
 
 == User Preferences
 Scheduler is initialised with default user preferences.
@@ -121,7 +130,7 @@ working hours for it to be displayed in the schedules.
 `endTime`: "21:00"
 
 === Duration of Timeslot
-Each time slot that an interviewer or interviewee indicates, must be strictly of this pre-defined duration for it to be
+Each time slot that an interviewer or interviewee indicates, must be strictly of this pre-defined duration in the user preference for it to be
  displayed in the schedules. This duration will also determine the number of timeslots daily, each with the indicated duration, from the `startTime` to `endTime` of pre-defined <<Working Hours, Working Hours>>.
 *It is represented by `duration` in the user preference file.*
 
@@ -165,9 +174,9 @@ IMPORTANT: The indicated timeslots, in adding or importing interviewers/intervie
 * Items in square brackets `[]` are optional.
 * Items with `...` after them can be used multiple times, including zero times.
 * *Parameters* can be in any order. E.g if a command specifies `n/NAME p/PHONE`, passing the input as `p/PHONE n/NAME` is also acceptable.
-* Example: `add r/interviewee n/NAME p/PHONE f/FACULTY y/YEAR_OF_STUDY ep/PERSONAL_EMAIL ew/NUS_WORK_EMAIL d/DEPARTMENT... s/SLOT... [t/TAG]...`
-** `NAME`, `PHONE`. `FACULTY`, `YEAR_OF_STUDY`, `PERSONAL_EMAIL`, `NUS_WORK_EMAIL`, `DEPARTMENT`, `SLOT` and `TAG` are to be supplied by the user.
-*** Valid input: `add r/interviewee n/John Doe p/88888888 f/School of Computing y/2019 ep/john_doe@gmail.com ew/john_doe@u.nus.edu d/Marketing s/17/10/2019 13:00-14:00 t/friends`
+* Example: `add interviewee n/NAME p/PHONE f/FACULTY y/YEAR_OF_STUDY ep/PERSONAL_EMAIL ew/NUS_WORK_EMAIL d/DEPARTMENT... s/SLOT... [t/TAG]...`
+** `NAME`, `PHONE`, `FACULTY`, `YEAR_OF_STUDY`, `PERSONAL_EMAIL`, `NUS_WORK_EMAIL`, `DEPARTMENT`, `SLOT` and `TAG` are to be supplied by the user.
+*** Valid input: `add interviewee n/John Doe p/88888888 f/School of Computing y/1 ep/john_doe@gmail.com ew/john_doe@u.nus.edu d/Marketing s/17/10/2019 13:00-14:00 t/friends`
 *** `t/friends` is optional, and can be omitted from the command.
 *** Multiple tags can be supplied as input in place of just `t/friends`: `t/friends t/strong t/likesDogs`
 
@@ -177,15 +186,14 @@ IMPORTANT: The indicated timeslots, in adding or importing interviewers/intervie
 Shows helpful information on using this software.
 Format: `help`
 
-//tag::import
+
+// tag::import[]
+
 === Importing existing availabilities `import`
 2 types of data can be imported - interviewers' availabilities and interviewees' details.
 Both of these details needs to be in CSV format and must follow the format given in the templates below.
 These templates were adapted versions of NUSync's interview sign up excel sheets.
-The templates for the import commands can be found here:
-
-* Interviewers' availability: http://bit.ly/interviewerTemplate
-* Interviewees' details: http://bit.ly/intervieweeDetails
+The templates for the import commands can be found <<Import your csv file into the application, here>>:
 
 TIP: If you wish to import a new set of data of the same type, we strongly recommend that you use the <<Clear all data `clear`, Clear>> command to clear pre-existing data before re-importing newer data.
 This is because Scheduler does not allow duplicate persons, for both interviewer and interviewee. Unless you are very certain that the
@@ -195,7 +203,7 @@ Constraints:
 
 * Data in .csv file must follow the settings defined in the user preference file. View <<User Preferences, User Preferences>> if you wish to change the
 default settings.
-* Data to be imported should only be in english and should strictly follow the format of the templates given above, e.g. format of headers and timeslots.
+* Data to be imported should only be in English and should strictly follow the format of the templates given above, e.g. format of headers and timeslots.
 
 ==== Importing interviewers’ availability
 Imports interviewers’ availability from a comma separated values (CSV) file. After import command is ran, the GUI should display the imported data.
@@ -206,11 +214,22 @@ Key formatting information for Interviewer's Data:
 
 image::InterviewerData.png[]
 
-* 1. The first column of each day's schedule will consist of the timeslots for that day.
-* 2. Each timeslot should also be in the format `HH:mm - HH:mm`.
-* 3. The very first header at the top left-hand corner should indicate the day of the schedule. The subsequent headers should indicate the interviewers in the format `DEPARTMENT - INTERVIEWER'S_NAME`.
+* 1. The top left corner of the .csv file consists of 2 attributes which are `Days` and `Interviewers`.
+** `Days` is the number of days in the .csv file which is equal to the number of tables in the .csv file. Each table represents
+the availability of the interviewers in 1 day.
+** `Interviewers` is the number of interviewers in the .csv file. Each interviewer must exist in every table in the .csv file
+regardless of whether the interviewer is not available for that entire day.
+
+* 2. The first column of each day's schedule will consist of the timeslots for that day. Each timeslot should also be in the format `HH:mm - HH:mm`.
+** Time slots must obey the allowed values that are specified in the <<User Preferences, User Preferences>>.
+
+* 3. The leftmost header in the first row of a table should indicate the **date** of the schedule. The subsequent headers
+of the first row should indicate the **interviewers details** in the format of `DEPARTMENT - INTERVIEWER'S_NAME`.
+** Except the date, the first row, which are the interviewers details, of every table in the .csv file needs to be the same.
+
 * 4. A "1" in a timeslot represents that the interviewer in that column is *available* and "0" represents that he/she is *unavailable* for that particular timeslot.
-* 5. Separation of different days of schedules is made by leaving 2 empty lines after the end of the first table.
+
+* 5. Separation of different tables is made by leaving 2 empty lines after the end of every table.
 
 Format of command: `import interviewer fp/FILE_PATH` +
     - FILE_PATH needs to be of .csv extension +
@@ -222,7 +241,6 @@ Example:
 
 Constraints:
 
-* Timeslots must obey the allowed values that are specified in the <<User Preferences, User Preferences>>.
 * Duplicate entries of the same interviewer (same name) cannot be presented in the CSV file to be imported.
 * If none of the interviewers are available for a particular day, e.g. all "0" for all timeslots on that day, the GUI will not display the schedule for that day.
 
@@ -233,9 +251,15 @@ NOTE: There will be no changes in the schedules tab after the import of intervie
 
 Key formatting information for Interviewee's Data:
 
-* Headers specify the details of the Interviewee to be imported. The order of the headers must be strictly followed as shown in the above template.
+image::IntervieweeData.png[]
+
+
+* The first row specifies the details of the Interviewee to be imported. The order of the headers in the first row must be strictly followed as shown in the above template.
+* The constraints of the interviewee details(i.e. format) in Add/Delete/Edit command also applies to the interviewee details in the imported data as well.
 * Timeslots: Each timeslot should be in the format `dd/MM/yyy HH:mm - HH:mm`. Use commas to separate the timeslots if there are more than 1.
+Timeslots must obey the allowed values that are specified in the <<User Preferences, User Preferences>>.
 * There can only be 1 unique value for all other fields. Commas should not be used in these fields.
+
 
 Format: `import interviewee fp/FILE_PATH` +
     - FILE_PATH needs to be of .csv extension. +
@@ -247,10 +271,9 @@ Example:
 
 Constraints:
 
-* Timeslots must obey the allowed values that are specified in the <<User Preferences, User Preferences>>.
 * Duplicate entries of the same interviewee cannot be presented in the CSV file to be imported.
 
-// end::import
+// end::import[]
 
 // tag::clear
 === Clear all data `clear`
@@ -326,7 +349,7 @@ Format: `email ct/status`
 // tag::add_interviewee[]
 
 === Add interviewees/interviewers manually `add`
-Manually add a new entity to the database. The command format differs on the `r/ROLE` prefix supplied:
+Manually add a new entity to the database. The command format differs on the preamble supplied, which should be `interviewee` or `interviewer`:
 
 * If `interviewee` is supplied, refer to <<Adding a new interviewee, Adding a new interviewee>> below.
 * If `interviewer` is supplied, refer to <<Adding a new interviewer, Adding a new interviewer>> below.
@@ -334,11 +357,17 @@ Manually add a new entity to the database. The command format differs on the `r/
 ==== Adding a new interviewee
 Manually add a new interviewee to the database.
 
-Format: `add r/interviewee n/NAME p/PHONE f/FACULTY y/YEAR_OF_STUDY ep/PERSONAL_EMAIL ew/NUS_WORK_EMAIL d/DEPARTMENT... s/SLOT... [t/TAG]...`
+Format: `add interviewee n/NAME p/PHONE f/FACULTY y/YEAR_OF_STUDY ep/PERSONAL_EMAIL ew/NUS_WORK_EMAIL d/DEPARTMENT... s/SLOT... [t/TAG]...`
 
 Example:
 
- add r/interviewee n/John Doe p/88888888 t/CAP5 t/dogLover f/School of Computing ep/JohnDoe@gmail.com ew/JohnDoe@u.nus.edu y/2018 d/Marketing s/20/09/2019 18:00-18:30
+ add interviewee n/John Doe p/91234567 f/School of Computing y/1 ep/john_doe@gmail.com ew/john_doe@u.nus.edu d/Marketing s/17/10/2019 13:30-14:00 t/friends
+
+
+Notes:
+
+* If a name prefix `n/` is supplied, the `NAME` given should not match (case-insensitive) that of other interviewees already in Scheduler.
+** `John Doit` and `John Do it` are considered different names.
 
 // end::add_interviewee[]
 
@@ -349,22 +378,23 @@ Constraints:
 
 * A `n/NAME` must only contain alphanumeric characters and spaces, and should not be blank.
 * A `p/PHONE` must only contain numbers, and should be at least 3 digits long.
-* A `f/FACULTY` can take any value in english, but should not be blank.
-* A `y/YEAR_OF_STUDY` must be a positive integer.
+* A `f/FACULTY` can take any value in English, but should not be blank.
+* A `y/YEAR_OF_STUDY` must be a positive integer within the range [1,5].
 * A `ep/PERSONAL_EMAIL` or `ew/NUS_WORK_EMAIL` must be of format local-part@domain.
 ** The local-part must only contain alphanumeric characters and special characters ( !#$%&'*+/=?`{|}~^.- ), excluding the parenthesis.
 ** The domain name must at least be 2 characters long, start and end with alphanumeric characters and consist of alphanumeric characters, with a period or a hyphen for the characters in-between, if any.
-* A `d/DEPARTMENT` can take any value in english, but should not be blank.
+* A `d/DEPARTMENT` should be in English, and should not be blank.
 * A `t/TAG` must only be alphanumeric and one word, i.e `t/catLover` is correct while `t/cat lover` is not.
 * `s/SLOT` must follow the format: `dd/MM/yyyy HH:mm-HH:mm`, where *dd/MM/yyyy* refers to a *date*, the leftmost *HH:mm* refers to the *start duration*
 and the rightmost *HH:mm* refers to the *end duration*.
 * The date *dd/MM/yyyy* must strictly be a valid date, i.e 30/02/2019  cannot be supplied as a date.
-* The duration of a `s/SLOT` must follow these constraints:
-** A duration must be in 24-hour format.
-** The range of durations available for input must be within <<Working Hours, Working Hours>>.
-** The start duration must be earlier than the end duration, and be in increments of `duration`.
-The time elapsed from the start duration to end duration must also follow the number of minutes as specified
-by the value of `duration` in <<User Preferences, User Preferences>>. See <<Duration of Time slot, Duration of Time slot>> for more details.
+* The *start duration* and *end duration* of a `s/SLOT` must follow these constraints:
+** A *start duration* and *end duration* must be in 24-hour format.
+** The range of *start durations* and *end durations* available for input must be within <<Working Hours, Working Hours>>.
+** The *start duration* must be earlier than the *end duration*, and be in increments of `duration`.
+The time elapsed from the *start duration* to *end duration* must also follow the number of minutes as specified
+by the value of `duration` in <<User Preferences, User Preferences>>. Otherwise, scheduled data will not be displayed
+properly in the user interface. See <<Duration of Timeslot, Duration of Timeslot>> for more details.
 
 ====
 
@@ -375,11 +405,16 @@ by the value of `duration` in <<User Preferences, User Preferences>>. See <<Dura
 ==== Adding a new interviewer
 Manually add a new interviewer to the database.
 
-Format: `add r/interviewer n/NAME p/PHONE ew/NUS_WORK_EMAIL d/DEPARTMENT  s/SLOT... [t/TAG]...`
+Format: `add interviewer n/NAME p/PHONE ew/NUS_WORK_EMAIL d/DEPARTMENT  s/SLOT... [t/TAG]...`
 
 Example:
 
- add r/interviewer n/Mary Jane p/98765432 ew/mary_jane@u.nus.edu d/Marketing s/20/09/2019 18:00-18:30
+ add interviewer n/Mary Jane p/98765432 ew/mary_jane@u.nus.edu d/Marketing s/20/09/2019 18:00-18:30
+
+Notes:
+
+* If a name prefix `n/` is supplied, the `NAME` given should not match (case-insensitive) that of other interviewers already in Scheduler.
+** `John Doit` and `John Do it` are considered different names.
 
 // end::add_interviewer[]
 
@@ -391,17 +426,18 @@ Constraints:
 * A `ew/NUS_WORK_EMAIL` must be of format local-part@domain.
 ** The local-part must only contain alphanumeric characters and special characters ( !#$%&'*+/=?`{|}~^.- ), excluding the parenthesis.
 ** The domain name must at least be 2 characters long, start and end with alphanumeric characters and consist of alphanumeric characters, with a period or a hyphen for the characters in-between, if any.
-* A `d/DEPARTMENT` can take any value in english, but should not be blank.
+* A `d/DEPARTMENT` should be in English, and should not be blank.
 * A `t/TAG` must only be alphanumeric and one word, i.e `t/catLover` is correct while `t/cat lover` is not.
 * `s/SLOT` must follow the format: `dd/MM/yyyy HH:mm-HH:mm`, where *dd/MM/yyyy* refers to a *date*, the leftmost *HH:mm* refers to the *start duration*
 and the rightmost *HH:mm* refers to the *end duration*.
 * The date *dd/MM/yyyy* must strictly be a valid date, i.e 30/02/2019  cannot be supplied as a date.
-* The duration of a `s/SLOT` must follow these constraints:
-** A duration must be in 24-hour format.
-** The range of durations available for input must be within <<Working Hours, Working Hours>>.
-** The start duration must be earlier than the end duration, and be in increments of `duration`.
-The time elapsed from the start duration to end duration must also follow the number of minutes as specified
-by the value of `duration` in <<User Preferences, User Preferences>>. See <<Duration of Time slot, Duration of Time slot>> for more details.
+* The *start duration* and *end duration* of a `s/SLOT` must follow these constraints:
+** A *start duration* and *end duration* must be in 24-hour format.
+** The range of *start durations* and *end durations* available for input must be within <<Working Hours, Working Hours>>.
+** The *start duration* must be earlier than the *end duration*, and be in increments of `duration`.
+The time elapsed from the *start duration* to *end duration* must also follow the number of minutes as specified
+by the value of `duration` in <<User Preferences, User Preferences>>. Otherwise, scheduled data will not be displayed
+properly in the user interface. See <<Duration of Timeslot, Duration of Timeslot>> for more details.
 
 ====
 
@@ -416,7 +452,7 @@ Manually edit an entity in the database. The command format depends on the `r/RO
 ==== Edit an existing interviewee
 Manually edit an existing interviewee in the database.
 
-Format: `edit NAME r/interviewee [p/PHONE] [f/FACULTY] [y/YEAR_OF_STUDY] [ep/PERSONAL_EMAIL] [ew/NUS_WORK_EMAIL]
+Format: `edit NAME r/interviewee [n/NAME] [p/PHONE] [f/FACULTY] [y/YEAR_OF_STUDY] [ep/PERSONAL_EMAIL] [ew/NUS_WORK_EMAIL]
 [d/DEPARTMENT]... [s/SLOT]... [t/TAG]...`
 
 Notes:
@@ -424,10 +460,12 @@ Notes:
 * An empty tag prefix `t/` can be supplied to reset the tags of an interviewee.
 * If a department prefix `d/` is supplied, at least one valid, non-empty department must be provided.
 * If a slot prefix `s/` is supplied, at least one valid, non-empty slot must be provided.
+* If a name prefix `n/` is supplied, the `NAME` given should not match (case-insensitive) that of other interviewees.
+** `John Doit` and `John Do it` are considered different names.
 
 Example:
 
- edit John Doe r/interviewee p/91234567 f/School of Computing s/05/11/2019 18:00-19:00
+ edit John Doe r/interviewee p/91234567 f/School of Computing s/05/11/2019 18:30-19:00
 
 // end::edit_interviewee[]
 
@@ -440,22 +478,23 @@ Constraints:
 
 * A `n/NAME` must only contain alphanumeric characters and spaces, and should not be blank.
 * A `p/PHONE` must only contain numbers, and should be at least 3 digits long.
-* A `f/FACULTY` can take any value in english, but should not be blank.
-* A `y/YEAR_OF_STUDY` must be a positive integer.
+* A `f/FACULTY` can take any value in English, but should not be blank.
+* A `y/YEAR_OF_STUDY` must be a positive integer within the range [1,5].
 * A `ep/PERSONAL_EMAIL` or `ew/NUS_WORK_EMAIL` must be of format local-part@domain.
 ** The local-part must only contain alphanumeric characters and special characters ( !#$%&'*+/=?`{|}~^.- ), excluding the parenthesis.
 ** The domain name must at least be 2 characters long, start and end with alphanumeric characters and consist of alphanumeric characters, with a period or a hyphen for the characters in-between, if any.
-* A `d/DEPARTMENT` can take any value in english, but should not be blank.
+* A `d/DEPARTMENT` should be in English, and should not be blank.
 * A `t/TAG` must only be alphanumeric and one word, i.e `t/catLover` is correct while `t/cat lover` is not.
 * `s/SLOT` must follow the format: `dd/MM/yyyy HH:mm-HH:mm`, where *dd/MM/yyyy* refers to a *date*, the leftmost *HH:mm* refers to the *start duration*
 and the rightmost *HH:mm* refers to the *end duration*.
 * The date *dd/MM/yyyy* must strictly be a valid date, i.e 30/02/2019  cannot be supplied as a date.
-* The duration of a `s/SLOT` must follow these constraints:
-** A duration must be in 24-hour format.
-** The range of durations available for input must be within <<Working Hours, Working Hours>>.
-** The start duration must be earlier than the end duration, and be in increments of `duration`.
-The time elapsed from the start duration to end duration must also follow the number of minutes as specified
-by the value of `duration` in <<User Preferences, User Preferences>>. See <<Duration of Time slot, Duration of Time slot>> for more details.
+* The *start duration* and *end duration* of a `s/SLOT` must follow these constraints:
+** A *start duration* and *end duration* must be in 24-hour format.
+** The range of *start durations* and *end durations* available for input must be within <<Working Hours, Working Hours>>.
+** The *start duration* must be earlier than the *end duration*, and be in increments of `duration`.
+The time elapsed from the *start duration* to *end duration* must also follow the number of minutes as specified
+by the value of `duration` in <<User Preferences, User Preferences>>. Otherwise, scheduled data will not be displayed
+properly in the user interface. See <<Duration of Timeslot, Duration of Timeslot>> for more details.
 
 ====
 
@@ -464,16 +503,18 @@ by the value of `duration` in <<User Preferences, User Preferences>>. See <<Dura
 ==== Edit an existing interviewer
 Manually edit an existing interviewer in the database.
 
-Format: `edit NAME r/interviewer [p/PHONE] [t/TAG]... [d/DEPARTMENT] [ew/NUS_WORK_EMAIL] [s/SLOT...]`
+Format: `edit NAME r/interviewer [n/NAME] [p/PHONE] [t/TAG]... [d/DEPARTMENT] [ew/NUS_WORK_EMAIL] [s/SLOT]...`
 
 Notes:
 
-* An empty tag prefix `t/` can be supplied to reset the tags of an interviewee.
+* An empty tag prefix `t/` can be supplied to reset the tags of an interviewer.
 * If a slot prefix `s/` is supplied, at least one valid, non-empty slot must be provided.
+* If a name prefix `n/` is supplied, the `NAME` given should not match (case-insensitive) that of other interviewers.
+** `John Doit` and `John Do it` are considered different names.
 
 Example:
 
- edit John Doe r/interviewee p/91234567 f/School of Computing s/05/11/2019 18:00-19:00
+ edit John Doe r/interviewer p/91234567 s/05/11/2019 18:30-19:00
 
 // end::edit_interviewer[]
 
@@ -489,17 +530,18 @@ Constraints:
 * A `ew/NUS_WORK_EMAIL` must be of format local-part@domain.
 ** The local-part must only contain alphanumeric characters and special characters ( !#$%&'*+/=?`{|}~^.- ), excluding the parenthesis.
 ** The domain name must at least be 2 characters long, start and end with alphanumeric characters and consist of alphanumeric characters, with a period or a hyphen for the characters in-between, if any.
-* A `d/DEPARTMENT` can take any value in english, but should not be blank.
+* A `d/DEPARTMENT` should be in English, and should not be blank.
 * A `t/TAG` must only be alphanumeric and one word, i.e `t/catLover` is correct while `t/cat lover` is not.
 * `s/SLOT` must follow the format: `dd/MM/yyyy HH:mm-HH:mm`, where *dd/MM/yyyy* refers to a *date*, the leftmost *HH:mm* refers to the *start duration*
 and the rightmost *HH:mm* refers to the *end duration*.
 * The date *dd/MM/yyyy* must strictly be a valid date, i.e 30/02/2019  cannot be supplied as a date.
-* The duration of a `s/SLOT` must follow these constraints:
-** A duration must be in 24-hour format.
-** The range of durations available for input must be within <<Working Hours, Working Hours>>.
-** The start duration must be earlier than the end duration, and be in increments of `duration`.
-The time elapsed from the start duration to end duration must also follow the number of minutes as specified
-by the value of `duration` in <<User Preferences, User Preferences>>. See <<Duration of Time slot, Duration of Time slot>> for more details.
+* The *start duration* and *end duration* of a `s/SLOT` must follow these constraints:
+** A *start duration* and *end duration* must be in 24-hour format.
+** The range of *start durations* and *end durations* available for input must be within <<Working Hours, Working Hours>>.
+** The *start duration* must be earlier than the *end duration*, and be in increments of `duration`.
+The time elapsed from the *start duration* to *end duration* must also follow the number of minutes as specified
+by the value of `duration` in <<User Preferences, User Preferences>>. Otherwise, scheduled data will not be displayed
+properly in the user interface. See <<Duration of Timeslot, Duration of Timeslot>> for more details.
 
 ====
 
@@ -522,33 +564,50 @@ Example:
 
  delete John Doe r/interviewee
 
-====
+Notes:
 
-Constraints:
-
-* The interviewee with `NAME` must exist in the Scheduler.
-
-====
+* An interviewee with the same name as the given `NAME` argument (case-insensitive) should exist in Scheduler.
 
 ==== Delete an existing interviewer
 Deletes the specified interviewer from the database.
 
-Format: `delete NAME r/interviewee`
+Format: `delete NAME r/interviewer`
 
 Example:
 
  delete Bohn Doe r/interviewer
 
+Notes:
+
+* An interviewer with the same name as the given `NAME` argument (case-insensitive) should exist in Scheduler.
+
+// end::delete[]
+
+// tag::UiDisplay[]
+
+=== UI Display
+
+==== Display Schedules
+Display multiple tables that consist information of the schedules generated in a day format. The columns will show the date of the schedule followed by
+the interviewers and their respective departments. The rows consists of the time slots as well as names of the interviewee.
+
+Format: `display schedule`
+
+Notes:
+* You are also able to toggle to display schedule by clicking on the Schedules tab.
+
 ====
 
 Constraints:
 
-* The interviewer with `NAME` must exist in the Scheduler.
+* The command must be exactly the same as the format.
 
 ====
 
-// end::delete[]
+==== Display Interviewee
+Display information of the interviewees in a table format.
 
+<<<<<<< HEAD
 // tag::UiDisplay[]
 
 === UI Display `display`
@@ -580,6 +639,15 @@ Notes:
 
 ====
 
+=======
+Format: `display interviewee`
+
+Notes:
+* You are also able to toggle to display schedule by clicking on the Interviewee tab.
+
+====
+
+>>>>>>> AY1920S1-CS2103-F09-1-master
 Constraints:
 
 * The command must be exactly the same as the format.
@@ -639,6 +707,8 @@ User will also be able to filter by tags.
 
 Format: `filter tag TAG_NAME`
 
+// tag::schedule[]
+
 === Scheduling `schedule`
 ==== Schedule the interviews
 Schedule and allocate interviewees to the available interview slots based on the availability of interviewees and
@@ -646,12 +716,21 @@ their choice of department.
 
 Format: `schedule`
 
+[NOTE]
+To ensure that the displayed scheduling result is always updated with the latest database of interviewers and interviewees,
+add/delete/edit of interviewee or interviewer will remove the scheduling result, hence you will need to type `schedule` again.
+
+// end::schedule[]
+
+
+// tag::export[]
+
 === Exporting of interview schedule `export`
 Exports the allocated interview schedule timetable to the specified comma separated values (CSV) file.
 
 Format: `export fp/FILE_PATH`
 
-* PATH_TO_FILE is the absolute path to the file.
+* FILE_PATH is the path to the file.
 * E.g C:\\Users\Bob\file.csv
 
 NOTE: If `FILE_PATH` is a valid .csv file but does not exist, it will be created in the specified path.
@@ -663,7 +742,7 @@ Example:
 Exported data format:
 
 * The exported data will follow the format of the schedules in 'schedules' tab.
-* Each schedule (table) will be separated from the previous with 2 empty lines.
+* Each schedule (table) will be separated from the previous by 2 empty lines.
 * Timeslots with "0" indicates that the interviewer is not available for the timeslot.
 Timeslots with "1" indicates that it is an available slot that has not been filled up by an interviewee.
 * Csv file can be converted into an excel file by following this guide - https://www.ablebits.com/office-addins-blog/2014/05/01/convert-csv-excel/.
@@ -675,7 +754,10 @@ Constraints:
 
 WARNING: The exported data will erase and replace all pre-existing data in the specified file.
 
+// end::export[]
+
 // tag::email[]
+
 === Sending of email `email`
 ==== Sending of interview time slot to interviewee
 Opens an email dialog containing the interviewee’s allocated interview time slot to a particular interviewee specified, including other details such as the interviewer and location.
@@ -752,25 +834,25 @@ Format: `record rank`
 |`help` +
 
 |Import existing availabilities
-|`import interviewer fp/PATH_TO_FILE` +
-  `import interviewee fp/PATH_TO_FILE`
+|`import interviewer fp/FILE_PATH` +
+  `import interviewee fp/FILE_PATH`
 
 |Clear imported data
 |`clear` +
 
 |Add interviewee
-|`add r/interviewee n/NAME p/PHONE f/FACULTY y/YEAR_OF_STUDY ep/PERSONAL_EMAIL ew/NUS_WORK_EMAIL
+|`add interviewee n/NAME p/PHONE f/FACULTY y/YEAR_OF_STUDY ep/PERSONAL_EMAIL ew/NUS_WORK_EMAIL
 d/DEPARTMENT... s/SLOT... [t/TAG]...` +
 
 |Add interviewer
-|`add r/interviewer n/NAME p/PHONE ew/NUS_WORK_EMAIL d/DEPARTMENT  s/SLOT... [t/TAG]...` +
+|`add interviewer n/NAME p/PHONE ew/NUS_WORK_EMAIL d/DEPARTMENT s/SLOT... [t/TAG]...` +
 
 |Edit interviewee
-|`edit NAME r/interviewee [p/PHONE] [f/FACULTY] [y/YEAR_OF_STUDY] [ep/PERSONAL_EMAIL] [ew/NUS_WORK_EMAIL]
+|`edit NAME r/interviewee [n/NAME] [p/PHONE] [f/FACULTY] [y/YEAR_OF_STUDY] [ep/PERSONAL_EMAIL] [ew/NUS_WORK_EMAIL]
 [d/DEPARTMENT]... [s/SLOT]... [t/TAG]...` +
 
 |Edit interviewer
-|`edit NAME r/interviewer [p/PHONE] [t/TAG]... [d/DEPARTMENT] [ew/NUS_WORK_EMAIL] [s/SLOT...]` +
+|`edit NAME r/interviewer [n/NAME] [p/PHONE] [t/TAG]... [d/DEPARTMENT] [ew/NUS_WORK_EMAIL] [s/SLOT...]` +
 
 |Delete interviewee
 |`delete NAME r/interviewee` +
@@ -807,3 +889,30 @@ d/DEPARTMENT... s/SLOT... [t/TAG]...` +
  `record rank` +
 
 |===
+
+[appendix]
+=== TIP: Converting an Excel file to .csv format
+
+1) Open Excel and click *File -> Open*.
+
+image::quickstart/1_excel.png[width="500", align="left"]
+
+2) In the dialog box, find the Excel file on your computer and click *Open*.
+
+image::quickstart/2_excel.png[width="500", align="left"]
+
+3) On the Excel toolbar, select *File > Save As*.
+
+image::quickstart/3_excel.png[width="500", align="left"]
+
+4) In the dialog box, type a new name for your file in the *File Name* field.
+
+5) In the "Save as Type" drop-down menu, scroll down to locate and select *CSV (comma delimited)*.
+
+image::quickstart/4_excel.png[width="500", align="left"]
+
+6) Click *Save*.
+
+image::quickstart/5_excel.png[width="500", align="left"]
+
+NOTE: Solution and images referenced from https://knowledgebase.constantcontact.com

@@ -27,14 +27,13 @@ css file to enhance the GUI of the Scheduler.
 ** Highlights: This enhancement required a deeper understanding of implementing javafx, such as having to form columns dynamically in creating a schedule
 table. It is also challenging to involve integrating the multiple tables into one panel. Involves many research on what data structure can fit into the panel
 and in the end decided on converting the table into a list cell view.
+
 ** Credits: Jenkov tutorials for TableView class display.
 
 * *Minor enhancement*: Created a display command feature which allows the user to switch display using CLI command.
 
 * *Code contributed*: [https://nus-cs2103-ay1920s1.github.io/tp-dashboard/#search=mrchensheng21&sort=groupTitle&sortWithin=title&since=2019-09-06&timeframe=commit&mergegroup=false&groupSelect=groupByRepos&breakdown=false&tabOpen=true&tabType=authorship&tabAuthor=mrchensheng21&tabRepo=AY1920S1-CS2103-F09-1%2Fmain%5Bmaster%5D[Functional code]]
                       [https://nus-cs2103-ay1920s1.github.io/tp-dashboard/#search=mrchensheng21&sort=groupTitle&sortWithin=title&since=2019-09-06&timeframe=commit&mergegroup=false&groupSelect=groupByRepos&breakdown=false&tabOpen=true&tabType=authorship&tabAuthor=mrchensheng21&tabRepo=AY1920S1-CS2103-F09-1%2Fmain%5Bmaster%5D[Test code]]
-
-* *Other contributions*:
 
 ** Project management:
 *** Help in checking code quality of the team.
@@ -43,6 +42,10 @@ and in the end decided on converting the table into a list cell view.
 ** Enhancements to existing features:
 *** Creating tabs for the UI to display the different views. https://github.com/AY1920S1-CS2103-F09-1/main/pull/153[#153]
 *** Update GUI style https://github.com/AY1920S1-CS2103-F09-1/main/pull/157[#157] https://github.com/AY1920S1-CS2103-F09-1/main/pull/175[#175]
+
+** Enhancements to existing features:
+*** Update GUI style https://github.com/AY1920S1-CS2103-F09-1/main/pull/175[#175]
+*** Creating tabs for the UI to display the different views. https://github.com/AY1920S1-CS2103-F09-1/main/pull/160[#160]
 
 ** Tools:
 *** Used multiple css files to enhance the UI display. https://github.com/AY1920S1-CS2103-F09-1/main/pull/157[#157]
