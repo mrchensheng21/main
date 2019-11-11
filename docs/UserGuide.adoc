@@ -259,7 +259,8 @@ Clears both interviewee and interviewer data in Scheduler. Will not remove user 
 Format: `clear`
 
 WARNING: Data erased cannot be undone!
-//end::clear
+
+//end::clear[]
 
 =======
 
