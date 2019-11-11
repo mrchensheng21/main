@@ -592,7 +592,8 @@ The message content can also be configured by the user. However, a default templ
 
 // end::email[]
 
-// tag:: display[]
+// tag::display[]
+
 === Display
 ==== Implementation
 
@@ -819,6 +820,7 @@ Use case ends.
 +
 Use case ends.
 
+// tag::DisplayUseCases[]
 === Use case: (UC-5) Display list of interviewee
 
 *MSS*
@@ -839,6 +841,7 @@ Use case resumes at step 1.
 +
 Use case resumes at step 1.
 
+// end::DisplayUseCases[]
 
 [appendix]
 == Non Functional Requirements
@@ -942,6 +945,7 @@ This section follows directly from the previous section, <<Editing an entity, Ed
 . Expected: The Interviewers tab now similar reflects the deleted interviewer `Delilah`.
 . You can delete any entity as long as the entity's name is shown in the Interviewee/Interviewer tab. See the User Guide under the `delete` command section for specifics.
 
+// tag::ManualDisplay[]
 === Displaying different views from the Scheduler
 Please refer to the UI Display section in the <<UserGuide#, user guide>> for more detailed information on the `display` command.
 
@@ -954,6 +958,8 @@ Please refer to the UI Display section in the <<UserGuide#, user guide>> for mor
 image::intervieweeListFormat.png[]
 image::interviewerListFormat.png[]
 image::scheduleListFormat.png[]
+
+// end::ManualDisplay[]
 
 === Scheduling Interviews
 . Import .csv files of interviewers' availability and interviewees' details using the `import` command.
