@@ -455,6 +455,7 @@ Constraints:
 
 // end::delete[]
 
+// tag::UiDisplay[]
 === UI Display
 
 ==== Display Schedules
@@ -513,6 +514,8 @@ There are 3 importance: Low, Medium and High.
 Format: `change s/SLOT IMPORTANCE`
 
 Example: `change s/17/10/2019 13:00-14:00 medium`
+
+// end::UiDisplay[]
 
 === Get interview schedule `get` `[Coming in v2.0]`
 Find an interviewer/interviewee and display his/her interview schedule.

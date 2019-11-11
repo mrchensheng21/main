@@ -72,6 +72,7 @@ image::ArchitectureSequenceDiagram.png[]
 
 The sections below give more details of each component.
 
+// tag::UiDesign[]
 [[Design-Ui]]
 === UI component
 
@@ -164,6 +165,8 @@ of interviewees
 
 .UI Refresh During Data Import Sequence Diagram
 image::ImportUIRefreshSequenceDiagram.png[]
+
+// end::UiDesign[]
 
 // tag::logic[]
 
@@ -589,6 +592,7 @@ The message content can also be configured by the user. However, a default templ
 
 // end::email[]
 
+// tag:: display[]
 === Display
 ==== Implementation
 
@@ -605,6 +609,8 @@ image::DisplayActivity.png[]
 
 NOTE: For the activity diagram, plantUML is not able to have multiple alternate paths from a diamond. Thus, multiple diamonds are used to implement
 multiple alternate paths.
+
+// end::display[]
 
 === Logging
 
