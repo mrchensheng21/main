@@ -601,7 +601,7 @@ the following method:
 
 The activity diagram will provide the overall flow of this implementation.
 
-image::DisplayActivity.png
+image::DisplayActivity.png[]
 
 NOTE: For the activity diagram, plantUML is not able to have multiple alternate paths from a diamond. Thus, multiple diamonds are used to implement
 multiple alternate paths.
@@ -942,7 +942,7 @@ Please refer to the UI Display section in the <<UserGuide#, user guide>> for mor
 . Type `display interviewee` to display a list of interviewee in the scheduler.
 . Expected: A table will be shown with the list of interviewees arranged in this format:
 
-image::intervieweeListFormat.png[]
+..image::intervieweeListFormat.png[]
 
 . Table will be filled when a list of interviewee is imported into the Scheduler.
 . You can also display the list of interviewers and the scheduled table by the command `display interviewer` and `display schedule` respectively.
