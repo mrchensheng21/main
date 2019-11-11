@@ -225,7 +225,10 @@ public interface Model {
      * @throws ParseException
      */
     void setEmptyScheduleList() throws ParseException;
-
+    /**
+     * Updates schedule list with just interviewers' data.
+     */
+    void updateScheduleList();
     /**
      * Replaces schedule data with the data in {@code schedule}.
      */
