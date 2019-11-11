@@ -68,7 +68,7 @@ public class ScheduleView extends UiPart<Region> {
                         } else if (cell.equals("0")) {
                             setText(cell);
                             setStyle("-fx-background-color: transparent");
-                        } else if (cell.equals("1")){
+                        } else if (cell.equals("1")) {
                             setText(cell);
                             setStyle("-fx-background-color: #b8b8b882");
                         } else {
