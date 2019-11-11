@@ -611,7 +611,38 @@ Format: `display interviewee`
 
 Notes:
 * You are also able to toggle to display schedule by clicking on the Interviewee tab.
-=======
+
+====
+
+Constraints:
+
+* The command must be exactly the same as the format.
+
+====
+
+==== Display Interviewer
+Display information of the interviewers in a table format.
+
+Format: `display interviewer`
+
+Notes:
+* You are also able to toggle to display schedule by clicking on the Interviewer tab.
+
+====
+
+Constraints:
+
+* The command must be exactly the same as the format.
+
+====
+
+==== Differentiating the importance of timetable slots through colours `[Coming in v2.0]`
+To edit time slots and change their colour so to show the importance of that slots.
+There are 3 importance: Low, Medium and High.
+
+Format: `change s/SLOT IMPORTANCE`
+
+Example: `change s/17/10/2019 13:00-14:00 medium`
 
 // end::UiDisplay[]
 
@@ -623,16 +654,6 @@ Clears all interviewees, interviewers and schedules from Scheduler.
 Format: `clear`
 
 // end::clear[]
-
-==== Differentiating the importance of timetable slots through colours `[Coming in v2.0]`
-To edit time slots and change their colour so to show the importance of that slots.
-There are 3 importance: Low, Medium and High.
-
-Format: `change s/SLOT IMPORTANCE`
-
-Example: `change s/17/10/2019 13:00-14:00 medium`
-
-// end::UiDisplay[]
 
 === Get interview schedule `get` `[Coming in v2.0]`
 Find an interviewer/interviewee and display his/her interview schedule.
